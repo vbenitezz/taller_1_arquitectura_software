@@ -1,0 +1,20 @@
+{% extends 'template_access.html' %}
+{% block title %} Sign up {% endblock %}
+{% block body %}
+
+<div class="row">
+    <h2 class="text-center">Sign up</h2>
+    
+    <!-- Método para asegurar la aplicación, evitar la suplantación, el servidor genera un token -->
+    <!-- Jinja motor de plantillas de Django  -->
+    <form method="POST"> {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Sign up</button>
+    </form>
+    
+    <p class="text-danger"><strong>{{error}}</strong></p>
+        
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'template_inventory.html' %}
+{% block title %} Edit product {% endblock %}
+{% block body %}
+
+<div class="row"> 
+    <div class="col-md-4 offset-md-4">
+        <h2 class="text-center">Edit product</h2>
+        <form action="/edit_product/" method="POST">{% csrf_token %}
+            <input type="hidden" id="input_id" name="input_id" value="{{product.id}}">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_name" name="input_name" value="{{product.name}}" placeholder="">
+                <label for="floatingInput">Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_category" name="input_category" value="{{product.category}}" placeholder="">
+                <label for="floatingInput">Category</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="input_total_quantity" name="input_total_quantity" value="{{product.total_quantity}}" placeholder="">
+                <label for="floatingInput">Total quantity</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_sale_price" name="input_sale_price" value="{{product.sale_price}}" placeholder="">
+                <label for="floatingInput">Sale price</label>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary" type="button">Edit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

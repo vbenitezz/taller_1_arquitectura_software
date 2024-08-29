@@ -1,0 +1,70 @@
+{% extends 'template_inventory.html' %}
+{% block title %} Inventory {% endblock %}
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2 class="text-center">Add product</h2>
+        <form action="/add_product/" method="POST">{% csrf_token %}
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_name" name="input_name" placeholder="">
+                <label for="floatingInput">Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_category" name="input_category" placeholder="">
+                <label for="floatingInput">Category</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="input_total_quantity" name="input_total_quantity" placeholder="">
+                <label for="floatingInput">Total quantity</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_sale_price" name="input_sale_price" placeholder="">
+                <label for="floatingInput">Sale price</label>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary" type="button">Add</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="table-responsive py-1">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Total quantity</th>
+                        <th>Sale price</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in products %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{p.name}}</td>
+                            <td>{{p.category}}</td>
+                            <td>{{p.total_quantity}}</td>
+                            <td>{{p.sale_price}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="before_edit_product/{{p.id}}" class="btn btn-success">Edit</a>
+                                    <a href="" class="btn btn-primary">Publish</a>
+                                    <a href="delete_product/{{p.id}}" class="btn btn-danger btn_delete_product">Delete</a>
+                                    
+                                </div>
+                            </td>
+                            
+                            
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
