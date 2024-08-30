@@ -14,8 +14,9 @@ def create_product(request):
     category = request.POST['input_category']
     sale_price = request.POST['input_sale_price']
     description = request.POST['input_description']
-    image = request.POST['input_image']
-    product = Product.objects.create(name=name, category=category, sale_price=sale_price, description=description, image=image)
+    image = request.FILES['input_image']
+    categories = ['Fast Food', 'Healthy Options', 'Grilled & BBQ', 'Sides', 'Beverages', 'Desserts']
+    product = Product.objects.create(name=name, category=categories[int(category)-1], sale_price=sale_price, description=description, image=image)
     return redirect('inventory')
 def delete_product(request, id):
     product = Product.objects.get(id=id).delete()
