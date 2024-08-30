@@ -3,6 +3,8 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 # Create your models here.
+
+
 class Product(models.Model):
     name = models.CharField(max_length=60)
     category = models.CharField(max_length=60)
@@ -48,6 +50,9 @@ class Published_Product(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
+    @property
+    def name_product(self):
+        return self.id_product_inventory.name_product
 
     
 

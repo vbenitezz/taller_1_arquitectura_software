@@ -1,0 +1,119 @@
+{% extends 'template_inventory_module.html' %}
+{% block title %} Create product {% endblock %}
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-5 col-xl-5">
+        <h2 class="text-center">Create product</h2>
+        <!-- class="was-validated" -->
+        <form action="/create_product/" method="POST" novalidate>{% csrf_token %}
+            <div class="mb-3">
+                <label for="validationTextarea" class="form-label">Name</label>
+                <input type="text" class="form-control" name="input_name" required>
+                <div class="invalid-feedback">Example invalid form file feedback</div>
+            </div>
+            <div class="mb-3">
+                <label for="validationTextarea" class="form-label">Category</label>
+                <select class="form-select" name="input_category" required aria-label="select example">
+                    <option value="">Open this select menu</option>
+                    <option value="1">Fast Food</option>
+                    <option value="2">Healthy Options</option>
+                    <option value="3">Grilled & BBQ</option>
+                    <option value="3">Sides</option>
+                    <option value="3">Beverages</option>
+                    <option value="3">Desserts</option>
+                </select>
+              <div class="invalid-feedback">Example invalid select feedback</div>
+            </div>
+            <div class="mb-3">
+                <label for="validationTextarea" class="form-label">Sale price</label>
+                <input type="text" class="form-control" name="input_sale_price" required>
+                <div class="invalid-feedback">Example invalid form file feedback</div>
+            </div>
+            <div class="mb-3">
+              <label for="validationTextarea" class="form-label">Description</label>
+              <textarea class="form-control" id="validationTextarea" name="input_description" placeholder="" required></textarea>
+              <div class="invalid-feedback">Please enter a message in the textarea.</div>
+            </div>
+            <div class="mb-3">
+                <label for="validationTextarea" class="form-label">Image</label>
+                <input type="file" class="form-control" name="input_image" aria-label="file example" required>
+                <div class="invalid-feedback">Example invalid form file feedback</div>
+            </div>
+            <div class="mb-3 d-grid gap-2">
+              <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+          </form>
+        
+
+
+
+
+
+        <!-- <form action="/create_product/" method="POST">{% csrf_token %}
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_name" name="input_name" placeholder="">
+                <label for="floatingInput">Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_category" name="input_category" placeholder="">
+                <label for="floatingInput">Category</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_sale_price" name="input_sale_price" placeholder="">
+                <label for="floatingInput">Sale price</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_description" name="input_description" placeholder="">
+                <label for="floatingInput">Description</label>
+            </div>
+             <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="input_image" name="input_image" placeholder="">
+                <label for="floatingInput">Image</label>
+            </div> 
+            <div class="form-floating mb-3">
+                <input type="file" class="form-control" id="input_image" name="input_image" placeholder="Select an image">
+                <label for="input_image">Image</label>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary" type="button">Create</button>
+            </div>
+        </form> -->
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">
+        <div class="table-responsive py-1">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Sale price</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if products %}
+                    {% for product in products %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.category}}</td>
+                        <td>{{product.sale_price}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="information_edit_product/{{product.id}}" class="btn btn-success">Edit</a>
+                                <a href="delete_product/{{product.id}}" class="btn btn-danger btn_delete_product">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
