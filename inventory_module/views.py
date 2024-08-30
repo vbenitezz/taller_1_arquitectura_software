@@ -14,7 +14,7 @@ def create_product(request):
     category = request.POST['input_category']
     sale_price = request.POST['input_sale_price']
     description = request.POST['input_description']
-    image = request.POST['input_image']
+    image = request.FILES['input_image']
     product = Product.objects.create(name=name, category=category, sale_price=sale_price, description=description, image=image)
     return redirect('inventory')
 def delete_product(request, id):
@@ -40,6 +40,12 @@ def edit_product(request):
     product.save()
 
     return redirect('inventory')
+
+def a(request):
+    return render(request,'prueba.html')
+
+def add_product(request):
+    name = request.POST['input_name']
 
 
 

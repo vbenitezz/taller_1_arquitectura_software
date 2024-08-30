@@ -1,0 +1,46 @@
+{% extends 'template_inventory_module.html' %}
+{% block title %} Inventory {% endblock %}
+{% block body %}
+
+<!--Inventory managing-->
+<div class="row">
+    <div class="col-sm-12 col-md-4 col-lg-5 col-xl-6">
+        <h2 class="text-center">Add product</h2>
+        <!-- class="was-validated" -->
+        <form action="/add_product/" method="POST" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="validationTextarea" class="form-label">Name</label>
+                <input type="text" class="form-control" name="input_name" required>
+                <div class="invalid-feedback">Example invalid form file feedback</div>
+            </div>
+            <div class="mb-3">
+                <label for="validationTextarea" class="form-label">Quantity</label>
+                <input type="number" class="form-control" name="input_quantity" required>
+                <div class="invalid-feedback">Example invalid form file feedback</div>
+            </div>
+            <div class="mb-3 d-grid gap-2">
+                <button class="btn btn-primary" type="submit">Add</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-12 col-md-8 col-lg-7 col-xl-6">
+        <div class="table-responsive py-1">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Total quantity</th>
+                        <th>Sale price</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
