@@ -11,7 +11,8 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label for="validationTextarea" class="form-label">Name</label>
-                <input type="text" class="form-control" name="input_name" required>
+                <input type="text" class="form-control" name="input_name" required id="input_name">
+                <ul id="suggestions_list" class="list-group" style="display: none;"></ul>
                 <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
             <div class="mb-3">
@@ -38,9 +39,40 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% if products %}
+                    {% for p in products %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{p.name_product}}</td>
+                        <td>{{p.category_product}}</td>
+                        <td>{{p.total_quantity}}</td>
+                        <td>{{p.sale_price_product}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="before_edit_product/{{p.id}}" class="btn btn-success">Edit</a>
+                                <a href="delete_product/{{p.id}}" class="btn btn-primary">Delete</a>
+                                <!-- Button trigger modal -->
+                                <button data-name="{{ p.name }}"
+                                    data-quantity="{{ p.total_quantity }}" data-price="{{ p.sale_price }}"
+                                    data-id="{{ p.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">
+                                    Publish
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        El producto no está registrado
+                    </div>
+                    {% endif %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script src="../static/js/input_suggestions.js"></script>
+
 {% endblock %}

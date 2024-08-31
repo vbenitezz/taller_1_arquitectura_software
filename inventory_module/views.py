@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Product
+from .models import Product,Product_Inventory, Inventory
+from django.http import JsonResponse
+from django.utils import timezone
 from django.contrib import messages
 
 # Create your views here.
@@ -47,6 +49,36 @@ def a(request):
 
 def add_product(request):
     name = request.POST['input_name']
+    total_quantity = request.POST['input_quantity']
+    products = Product.objects.filter(name=name)
+    today = timezone.now().date()
+    inventories = Inventory.objects.filter(creation_date=today)
+    inventory=inventories.first()
+    if inventory is None:
+        inventory = Inventory.objects.create()
+
+    if products.exists():
+        product = products.first()
+        product_inventory = Product_Inventory.objects.create(id_product=product,id_inventory=inventory,total_quantity=total_quantity)
+    else:
+        render(request,'prueba.html',{'products':products});
+    
+    return redirect('prueba_show')
+
+def prueba_show(request):
+    products_inventory = Product_Inventory.objects.all()
+    return render(request,'prueba.html',{'products':products_inventory})
+
+
+
+
+
+
+def search_products_suggestions(request):
+    query = request.GET.get('q','')
+    products = Product.objects.filter(name__icontains=query).values('name')
+    return JsonResponse(list(products),safe=False)
+
 
 
 

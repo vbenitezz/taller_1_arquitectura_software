@@ -3,4 +3,11 @@ th, td{
     vertical-align: middle;
 }
 
+.suggestion_li{
+    cursor: pointer;
+
+}
+.suggestion_li:hover {
+    background-color: #a9caff;
+}
 

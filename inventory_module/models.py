@@ -14,7 +14,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 class Inventory(models.Model):
-    creation_date = models.DateField(auto_now_add=True, unique=True)
+    creation_date = models.DateField(auto_now_add=True)
     def __str__(self):
         return f'Inventory ({self.creation_date})'
 class Product_Inventory(models.Model):
