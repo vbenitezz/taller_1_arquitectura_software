@@ -17,6 +17,9 @@ class Inventory(models.Model):
     creation_date = models.DateField(auto_now_add=True)
     def __str__(self):
         return f'Inventory ({self.creation_date})'
+    def clean(self):
+        if Inventory.objects.filter(creation_date=self.creation_date).exists():
+            raise ValidationError(f"There is already an inventory ({self.creation_date})")
 class Product_Inventory(models.Model):
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE)
     id_inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)

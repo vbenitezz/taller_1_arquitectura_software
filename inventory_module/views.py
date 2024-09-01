@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product,Product_Inventory, Inventory
+from .models import Product, Product_Inventory, Inventory
 from django.http import JsonResponse
 from django.utils import timezone
 from django.contrib import messages
@@ -23,29 +23,33 @@ def create_product(request):
 def delete_product(request, id):
     product = Product.objects.get(id=id).delete()
     return redirect('inventory')
-def information_edit_product(request, id):
+def get_product(request, id):
     product = Product.objects.get(id=id)
-    return render(request, 'edit_product.html', {'product': product})
-def edit_product(request):
-    id = request.POST['input_id']
-    name = request.POST['input_name']
-    category = request.POST['input_category']
-    sale_price = request.POST['input_sale_price']
-    description = request.POST['input_description']
-    image = request.POST['input_image']
-
-    product = Product.objects.get(id=id)
-    product.name = name 
-    product.category = category
-    product.sale_price = sale_price
-    product.description = description
-    product.image = image
-    product.save()
-
+    categories = {'Fast Food': 1, 'Healthy Options': 2, 'Grilled & BBQ': 3, 'Sides': 4, 'Beverages': 5, 'Desserts': 6}
+    data = {
+        'name': product.name,
+        'category': categories[product.category],
+        'sale_price': product.sale_price,
+        'description': product.description,
+        'image': product.image.url if product.image else ''
+    }
+    print(data)
+    return JsonResponse(data)
+def edit_product(request, id):
+    categories = {1: 'Fast Food', 2: 'Healthy Options', 3: 'Grilled & BBQ', 4: 'Sides', 5: 'Beverages', 6: 'Desserts'}
+    if request.method == 'POST':
+        product = Product.objects.get(id=id)
+        product.name = request.POST.get('name')
+        product.category = categories[int(request.POST.get('category'))]
+        product.sale_price = request.POST.get('sale_price')
+        product.description = request.POST.get('description')
+        if 'image' in request.FILES:
+            product.image = request.FILES['image']
+        product.save()
     return redirect('inventory')
 
 def a(request):
-    return render(request,'prueba.html')
+    return render(request,'add_product.html')
 
 def add_product(request):
     name = request.POST['input_name']
@@ -61,13 +65,13 @@ def add_product(request):
         product = products.first()
         product_inventory = Product_Inventory.objects.create(id_product=product,id_inventory=inventory,total_quantity=total_quantity)
     else:
-        render(request,'prueba.html',{'products':products});
+        render(request,'add_product.html',{'products':products})
     
     return redirect('prueba_show')
 
 def prueba_show(request):
     products_inventory = Product_Inventory.objects.all()
-    return render(request,'prueba.html',{'products':products_inventory})
+    return render(request,'add_product.html',{'products':products_inventory})
 
 
 

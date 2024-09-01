@@ -1,52 +1,31 @@
 {% extends 'template_inventory_module.html' %}
-{% block title %} Create product {% endblock %}
+{% block title %} Inventory {% endblock %}
 {% block body %}
 
+<!--Inventory managing-->
 <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-5 col-xl-5">
-        <h2 class="text-center">Create product</h2>
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2 class="text-center">Add product</h2>
         <!-- class="was-validated" -->
-        <form action="/create_product/" method="POST" novalidate enctype="multipart/form-data">{% csrf_token %}
+        <form action="/add_product/" method="POST" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="mb-3">
-                <label for="input_name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="input_name" name="input_name" required>
+                <label for="validationTextarea" class="form-label">Name</label>
+                <input type="text" class="form-control" name="input_name" required id="input_name">
+                <ul id="suggestions_list" class="list-group" style="display: none;"></ul>
                 <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
             <div class="mb-3">
-                <label for="input_category" class="form-label">Category</label>
-                <select class="form-select" id="input_category" name="input_category" required aria-label="select example">
-                    <option value="">Open this select menu</option>
-                    <option value="1">Fast Food</option>
-                    <option value="2">Healthy Options</option>
-                    <option value="3">Grilled & BBQ</option>
-                    <option value="4">Sides</option>
-                    <option value="5">Beverages</option>
-                    <option value="6">Desserts</option>
-                </select>
-              <div class="invalid-feedback">Example invalid select feedback</div>
-            </div>
-            <div class="mb-3">
-                <label for="input_sale_price" class="form-label">Sale price</label>
-                <input type="text" class="form-control" id="input_sale_price" name="input_sale_price" required>
-                <div class="invalid-feedback">Example invalid form file feedback</div>
-            </div>
-            <div class="mb-3">
-              <label for="input_description" class="form-label">Description</label>
-              <textarea class="form-control" id="input_description" name="input_description" placeholder="" required></textarea>
-              <div class="invalid-feedback">Please enter a message in the textarea.</div>
-            </div>
-            <div class="mb-3">
-                <label for="input_image" class="form-label">Image</label>
-                <input type="file" class="form-control" id="input_image" name="input_image" aria-label="file example" required>
+                <label for="validationTextarea" class="form-label">Quantity</label>
+                <input type="number" class="form-control" name="input_quantity" required>
                 <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
             <div class="mb-3 d-grid gap-2">
-              <button class="btn btn-primary" type="submit">Create</button>
+                <button class="btn btn-primary" type="submit">Add</button>
             </div>
         </form>
     </div>
-
-    <div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
         <div class="table-responsive py-1">
             <table class="table table-striped">
                 <thead>
@@ -54,76 +33,46 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Category</th>
+                        <th>Total quantity</th>
                         <th>Sale price</th>
                         <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% if products %}
-                    {% for product in products %}
+                    {% for p in products %}
                     <tr>
                         <td>{{forloop.counter}}</td>
-                        <td>{{product.name}}</td>
-                        <td>{{product.category}}</td>
-                        <td>{{product.sale_price}}</td>
+                        <td>{{p.name_product}}</td>
+                        <td>{{p.category_product}}</td>
+                        <td>{{p.total_quantity}}</td>
+                        <td>{{p.sale_price_product}}</td>
                         <td>
                             <div class="btn-group">
-
-                                <button data-id="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_product_modal">Edit</button>
-                                <a href="delete_product/{{product.id}}" class="btn btn-primary btn_delete_product">Delete</a>
-                                {% if product.image %}
-                                <button data-id="{{product.id}}" data-name="{{product.name}}" data-category="{{product.category}}" data-sale_price="{{product.sale_price}}" data-description="{{product.description}}" data-image="{{product.image.url}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show_details_modal">Details</button>
-                                {% endif %}
+                                <a href="before_edit_product/{{p.id}}" class="btn btn-success">Edit</a>
+                                <a href="delete_product/{{p.id}}" class="btn btn-primary">Delete</a>
+                                <!-- Button trigger modal -->
+                                <button data-name="{{ p.name }}"
+                                    data-quantity="{{ p.total_quantity }}" data-price="{{ p.sale_price }}"
+                                    data-id="{{ p.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">
+                                    Publish
+                                </button>
                             </div>
                         </td>
                     </tr>
                     {% endfor %}
+                    {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        El producto no está registrado
+                    </div>
                     {% endif %}
-                    
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="show_details_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Details</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Card -->
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="" class="img-fluid rounded-start card_image" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title"></h5>
-                                <h6 class="card-subtitle mb-2 text-body-secondary"></h6>
-                                <p class="card-text card_description"></p>
-                                <p class="card-text"><strong><small class="text-body-secondary card_sale_price"></small></strong></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card -->
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-
-
-
-
-
-  
 <!-- Modal -->
 <div class="modal fade" id="edit_product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -182,11 +131,8 @@
 </div>
 <!-- Modal -->
 
-  
 
 
-
-
+<script src="../static/js/input_suggestions.js"></script>
 
 {% endblock %}
-
