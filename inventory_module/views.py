@@ -23,6 +23,7 @@ def create_product(request):
 def delete_product(request, id):
     product = Product.objects.get(id=id).delete()
     return redirect('inventory')
+
 def get_product(request, id):
     product = Product.objects.get(id=id)
     categories = {'Fast Food': 1, 'Healthy Options': 2, 'Grilled & BBQ': 3, 'Sides': 4, 'Beverages': 5, 'Desserts': 6}
@@ -61,6 +62,9 @@ def edit_product_add_product(request, id):
         product_inventory = Product_Inventory.objects.get(id=id)
         product_inventory.total_quantity = request.POST.get('edit_quantity_add_product')
         product_inventory.save()
+    return redirect('add_product')
+def delete_product_add_product(request, id):
+    product_inventory = Product_Inventory.objects.get(id=id).delete()
     return redirect('add_product')
 
 

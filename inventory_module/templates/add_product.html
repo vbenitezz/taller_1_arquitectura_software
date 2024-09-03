@@ -65,8 +65,7 @@
                         <td>
                             <div class="btn-group">
                                 <button data-id_add_product="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_product_modal_add_product">Edit</button>
-                                <!-- <a href="before_edit_product/{{product.id}}" class="btn btn-success">Edit</a> -->
-                                <a href="delete_product/{{product.id}}" class="btn btn-primary">Delete</a>
+                                <a href="delete_product_add_product/{{product.id}}" class="btn btn-primary btn_delete_product">Delete</a>
                                 <!-- Button trigger modal -->
                                 <button data-name="{{ product.name_product }}" data-quantity="{{ product.total_quantity }}" data-price="{{ product.sale_price_product }}" data-id="{{ product.id_product.id }}" data-id-inventory="{{ product.id_inventory.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
                                     data-bs-target="#publish_modal">
@@ -81,7 +80,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="publish_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="publish_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
     <form action="/publish_product/" method="POST">
         {% csrf_token %}
@@ -133,7 +132,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- Modal -->
 <div class="modal fade" id="edit_product_modal_add_product" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -144,17 +143,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="edit_product_form_add_product" method="POST" novalidate enctype="multipart/form-data">{% csrf_token %}
+                <div class="mb-3">
+                    <label for="edit_name_add_product" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="edit_name_add_product" name="edit_name_add_product" readonly>
+                </div>
+                <form id="edit_product_form_add_product" method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <input type="hidden" id="edit_id_add_product" name="edit_id_add_product">
-                    <div class="mb-3">
-                        <label for="edit_name_add_product" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="edit_name_add_product" name="edit_name_add_product" readonly>
-                    </div>
+                    <!-- <input type="hidden" id="edit_id_product_add_product" name="edit_id_product_add_product">
+                    <input type="hidden" id="edit_id_inventory_add_product" name="edit_id_inventory_add_product"> -->
                     <div class="mb-3">
                         <label for="edit_quantity_add_product" class="form-label">Quantity</label>
                         <input type="number" class="form-control" id="edit_quantity_add_product" name="edit_quantity_add_product">
                     </div>
-                    
+    
                     <div class="mb-3 d-grid gap-2">
                         <button class="btn btn-primary" type="submit">Edit</button>
                     </div>
@@ -166,8 +167,9 @@
 <!-- Modal -->
 
 
-<script src="../static/js/input_suggestions.js"></script>
-<script src="../static/js/show_publish_modal.js"></script>
-
+<!-- <script src="../static/js/input_suggestions.js"></script>
+<script src="../static/js/show_publish_modal.js"></script> -->
+<script src="../static/js/edit_product_modal_add_product.js"></script>
+<script src="../static/js/delete_product.js"></script>
 
 {% endblock %}
