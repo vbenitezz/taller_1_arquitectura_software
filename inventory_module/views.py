@@ -93,18 +93,13 @@ def search_products_suggestions(request):
 
 def publish_product(request):
     if request.method == 'POST':
-        print("##############################3")
-        print("REQUEST:")
-        print(request.POST)
-        print("##############################3")
 
         published_quantity = int(request.POST['quantity'])
         id_product = int(request.POST['id_product'])
-        print("ID CESAR SALAD $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         print(id_product)
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        
 
-        published_product = get_object_or_404(Product_Inventory, id=id_product)
+        published_product = get_object_or_404(Product_Inventory, id_product=id_product)
         # Actualiza la cantidad y guarda el objeto
         published_product.total_quantity -= published_quantity
         published_product.save()
