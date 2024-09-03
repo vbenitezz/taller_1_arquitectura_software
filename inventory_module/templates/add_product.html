@@ -68,7 +68,7 @@
                                 <!-- <a href="before_edit_product/{{product.id}}" class="btn btn-success">Edit</a> -->
                                 <a href="delete_product/{{product.id}}" class="btn btn-primary">Delete</a>
                                 <!-- Button trigger modal -->
-                                <button data-name="{{ product.name_product }}" data-quantity="{{ product.total_quantity }}" data-price="{{ product.sale_price_product }}" data-id="{{ product.id_product.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                <button data-name="{{ p.name_product }}" data-quantity="{{ p.total_quantity }}" data-price="{{ p.sale_price_product }}" data-id="{{ p.id_product.id }}" data-id-inventory="{{ p.id_inventory.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
                                     data-bs-target="#publish_modal">
                                     Publish
                                 </button>
@@ -95,6 +95,8 @@
             <div class="row">
                 <div class="col">
                     <input type="hidden" id="id_product" name="id_product" value="">
+                    <input type="hidden" id="id_inventory" name="id_inventory" value="">
+
                     <label for="form-control" class="form-label">Type</label>
                     <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01">Options</label>

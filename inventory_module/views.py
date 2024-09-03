@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Product_Inventory, Inventory
+from .models import Product, Product_Inventory, Inventory, Published_Product
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db import IntegrityError
@@ -93,16 +93,17 @@ def search_products_suggestions(request):
 
 def publish_product(request):
     if request.method == 'POST':
-
-        published_quantity = int(request.POST['quantity'])
         id_product = int(request.POST['id_product'])
-        print(id_product)
+        id_published_product = get_object_or_404(Product_Inventory, id_product=id_product)
+        published_quantity = int(request.POST['quantity'])
+        id_published_product.total_quantity -= published_quantity
+        id_published_product.save()
         
+        publish_product_type = request.POST['type']
+        publish_product_pick_up_time= request.POST['pick_up_time']
+        publish_product_price = request.POST['price']
 
-        published_product = get_object_or_404(Product_Inventory, id_product=id_product)
-        # Actualiza la cantidad y guarda el objeto
-        published_product.total_quantity -= published_quantity
-        published_product.save()
+        published_product = Published_Product.objects.create(id_product_inventory = id_published_product,publish_type=publish_product_type,publish_quantity=published_quantity,publish_price = publish_product_price, pick_up_time = publish_product_pick_up_time )
         
         return redirect('add_product')
 
