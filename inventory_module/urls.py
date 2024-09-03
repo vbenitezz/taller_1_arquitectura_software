@@ -9,12 +9,13 @@ urlpatterns = [
     path('get_product/<int:id>/', views.get_product, name='get_product'),
     path('edit_product/<int:id>/', views.edit_product, name='edit_product'),
 
-    
-    
-    path('add_product/', views.a),
+
+    path('add_product_function/', views.add_product_function),
+    path('add_product/', views.add_product_view, name='add_product'),
     path('search_products_suggestions/', views.search_products_suggestions, name='search_products_suggestions'),
-    path('prueba_show/',views.prueba_show,name='prueba_show'),
-    path('add_product/',views.add_product)
+    path('show_add_product/',views.show_add_product,name='show_add_product'),
+
+    path('publish_product/',views.publish_product,name='publish_product')
 
     # path('add_publish_product/', views.add_publish_product, name='add_publish_product'),
 ]

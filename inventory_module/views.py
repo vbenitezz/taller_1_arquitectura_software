@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Product_Inventory, Inventory
 from django.http import JsonResponse
 from django.utils import timezone
+from django.db import IntegrityError
 from django.contrib import messages
-
 # Create your views here.
 
 def home_restaurant_chain(request):
@@ -48,33 +48,41 @@ def edit_product(request, id):
         product.save()
     return redirect('inventory')
 
-def a(request):
-    return render(request,'add_product.html')
-
-def add_product(request):
-    name = request.POST['input_name']
-    total_quantity = request.POST['input_quantity']
-    products = Product.objects.filter(name=name)
-    today = timezone.now().date()
-    inventories = Inventory.objects.filter(creation_date=today)
-    inventory=inventories.first()
-    if inventory is None:
-        inventory = Inventory.objects.create()
-
-    if products.exists():
-        product = products.first()
-        product_inventory = Product_Inventory.objects.create(id_product=product,id_inventory=inventory,total_quantity=total_quantity)
-    else:
-        render(request,'add_product.html',{'products':products})
-    
-    return redirect('prueba_show')
-
-def prueba_show(request):
+def add_product_view(request):
     products_inventory = Product_Inventory.objects.all()
     return render(request,'add_product.html',{'products':products_inventory})
 
+def add_product_function(request):
+    name = request.POST['input_name']
+    total_quantity = request.POST['input_quantity']
+    products = Product.objects.filter(name=name)
+    today = timezone.localtime(timezone.now()).date()
+    inventory = Inventory.objects.filter(creation_date=today).first()
+
+    if inventory is None:
+        inventory = Inventory.objects.create()
+    
+
+    if products.exists():
+        try:
+            product = products.first()
+            product_inventory = Product_Inventory.objects.create(
+                id_product=product, 
+                id_inventory=inventory, 
+                total_quantity=total_quantity
+            )
+            messages.success(request, 'Product added successfully')
+        except IntegrityError as e:
+            messages.error(request, 'The product you are trying to add has already been added; please delete or edit it')
+    else:
+        messages.error(request, 'The product you are trying to add is not in the inventory')
 
 
+    return redirect('show_add_product')
+
+def show_add_product(request):
+    products_inventory = Product_Inventory.objects.all()
+    return render(request,'add_product.html',{'products':products_inventory})
 
 
 
@@ -82,6 +90,28 @@ def search_products_suggestions(request):
     query = request.GET.get('q','')
     products = Product.objects.filter(name__icontains=query).values('name')
     return JsonResponse(list(products),safe=False)
+
+def publish_product(request):
+    if request.method == 'POST':
+        print("##############################3")
+        print("REQUEST:")
+        print(request.POST)
+        print("##############################3")
+
+        published_quantity = int(request.POST['quantity'])
+        id_product = int(request.POST['id_product'])
+        print("ID CESAR SALAD $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        print(id_product)
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+
+        published_product = get_object_or_404(Product_Inventory, id=id_product)
+        # Actualiza la cantidad y guarda el objeto
+        published_product.total_quantity -= published_quantity
+        published_product.save()
+        
+        return redirect('add_product')
+
+
 
 
 

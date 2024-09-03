@@ -2,12 +2,25 @@
 {% block title %} Inventory {% endblock %}
 {% block body %}
 
+{% if messages %}
+    {% for message in messages %}
+        {% if 'success' in message.tags %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <!--Inventory managing-->
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
         <h2 class="text-center">Add product</h2>
         <!-- class="was-validated" -->
-        <form action="/add_product/" method="POST" novalidate enctype="multipart/form-data">
+        <form action="/add_product_function/" method="POST" novalidate enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="validationTextarea" class="form-label">Name</label>
@@ -36,10 +49,10 @@
                         <th>Total quantity</th>
                         <th>Sale price</th>
                         <th>Options</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    {% if products %}
                     {% for p in products %}
                     <tr>
                         <td>{{forloop.counter}}</td>
@@ -47,92 +60,81 @@
                         <td>{{p.category_product}}</td>
                         <td>{{p.total_quantity}}</td>
                         <td>{{p.sale_price_product}}</td>
+                        
+
                         <td>
                             <div class="btn-group">
                                 <a href="before_edit_product/{{p.id}}" class="btn btn-success">Edit</a>
                                 <a href="delete_product/{{p.id}}" class="btn btn-primary">Delete</a>
                                 <!-- Button trigger modal -->
-                                <button data-name="{{ p.name }}"
-                                    data-quantity="{{ p.total_quantity }}" data-price="{{ p.sale_price }}"
-                                    data-id="{{ p.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop">
+                                <button data-name="{{ p.name_product }}" data-quantity="{{ p.total_quantity }}" data-price="{{ p.sale_price_product }}" data-id="{{ p.id_product.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                    data-bs-target="#publish_modal">
                                     Publish
                                 </button>
                             </div>
                         </td>
                     </tr>
                     {% endfor %}
-                    {% else %}
-                    <div class="alert alert-danger" role="alert">
-                        El producto no está registrado
-                    </div>
-                    {% endif %}
-                </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="edit_product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="publish_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
+    <form action="/publish_product/" method="POST">
+        {% csrf_token %}
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="publish_modal"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form id="edit_product_form" method="POST" novalidate enctype="multipart/form-data">{% csrf_token %}
-                    <div class="mb-3">
-                        <label for="edit_name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="edit_name" name="name" required>
-                        <div class="invalid-feedback">Example invalid form file feedback</div>
+        <div class="modal-body">
+            <div class="container">
+            <div class="row">
+                <div class="col">
+                    <input type="hidden" id="id_product" name="id_product" value="">
+                    <label for="form-control" class="form-label">Type</label>
+                    <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                    <select class="form-select" id="inputGroupSelect01" name="type" required>
+                        <option value="sale">Sale</option>
+                        <option value="donation">Donation</option>
+                    </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit_category" class="form-label">Category</label>
-                        <select class="form-select" id="edit_category" name="category" required aria-label="select example">
-                            <option value="">Open this select menu</option>
-                            <option value="1">Fast Food</option>
-                            <option value="2">Healthy Options</option>
-                            <option value="3">Grilled & BBQ</option>
-                            <option value="4">Sides</option>
-                            <option value="5">Beverages</option>
-                            <option value="6">Desserts</option>
-                        </select>
-                      <div class="invalid-feedback">Example invalid select feedback</div>
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <div class="input-group mb-3">
+                    <span class="input-group-text" id="quantity_label">Quantity</span>
+                    <input type="number" class="form-control" aria-describedby="quantity_label"
+                            min="1" name="quantity" required id="quantity">
                     </div>
-                    <div class="mb-3">
-                        <label for="edit_sale_price" class="form-label">Sale price</label>
-                        <input type="text" class="form-control" id="edit_sale_price" name="sale_price" required>
-                        <div class="invalid-feedback">Example invalid form file feedback</div>
+                    <label for="price" class="form-label">Price</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="price">Price</span>
+                        <input type="number" class="form-control" aria-describedby="price"
+                            name="price" required>
                     </div>
-                    <div class="mb-3">
-                      <label for="edit_description" class="form-label">Description</label>
-                      <textarea class="form-control" id="edit_description" name="description" placeholder="" required></textarea>
-                      <div class="invalid-feedback">Please enter a message in the textarea.</div>
+                    
+                    <label for="pick_up_time" class="form-label">PickUp time</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="pick_up_time">PickUp time</span>
+                        <input type="time" class="form-control" aria-describedby="pick_up_time"
+                            name="pick_up_time" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit_image" class="form-label">Current image</label>
-                        <img id="edit_image" src="" alt="Current image" class="img-fluid mb-3">
-                    </div>
-                    <div class="mb-3">
-                        <label for="" class="form-label">Change image</label>
-                        <input type="file" class="form-control" id="" name="image">
-                        <div class="invalid-feedback">Example invalid form file feedback</div>
-                    </div>
-                    <input type="hidden" id="edit_id" name="edit_id">
-                    <div class="mb-3 d-grid gap-2">
-                        <button class="btn btn-primary" type="submit">Edit</button>
-                    </div>
-                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal -->
-
 
 
 <script src="../static/js/input_suggestions.js"></script>
+<script src="../static/js/show_publish_modal.js"></script>
 
 {% endblock %}
