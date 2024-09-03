@@ -53,21 +53,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for p in products %}
+                    {% for product in products %}
                     <tr>
                         <td>{{forloop.counter}}</td>
-                        <td>{{p.name_product}}</td>
-                        <td>{{p.category_product}}</td>
-                        <td>{{p.total_quantity}}</td>
-                        <td>{{p.sale_price_product}}</td>
+                        <td>{{product.name_product}}</td>
+                        <td>{{product.category_product}}</td>
+                        <td>{{product.total_quantity}}</td>
+                        <td>{{product.sale_price_product}}</td>
                         
 
                         <td>
                             <div class="btn-group">
-                                <a href="before_edit_product/{{p.id}}" class="btn btn-success">Edit</a>
-                                <a href="delete_product/{{p.id}}" class="btn btn-primary">Delete</a>
+                                <button data-id="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_product_modal_add_product">Edit</button>
+                                <!-- <a href="before_edit_product/{{product.id}}" class="btn btn-success">Edit</a> -->
+                                <a href="delete_product/{{product.id}}" class="btn btn-primary">Delete</a>
                                 <!-- Button trigger modal -->
-                                <button data-name="{{ p.name_product }}" data-quantity="{{ p.total_quantity }}" data-price="{{ p.sale_price_product }}" data-id="{{ p.id_product.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                <button data-name="{{ product.name_product }}" data-quantity="{{ product.total_quantity }}" data-price="{{ product.sale_price_product }}" data-id="{{ product.id_product.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
                                     data-bs-target="#publish_modal">
                                     Publish
                                 </button>
@@ -126,12 +127,41 @@
             </div>
         </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="edit_product_modal_add_product" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit_product_form_add_product" method="POST" novalidate enctype="multipart/form-data">{% csrf_token %}
+                    <div class="mb-3">
+                        <label for="edit_name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="edit_name" name="name" required>
+                        <div class="invalid-feedback">Example invalid form file feedback</div>
+                    </div>
+                    
+                    
+                    
+                    
+                    <input type="hidden" id="edit_id" name="edit_id">
+                    <div class="mb-3 d-grid gap-2">
+                        <button class="btn btn-primary" type="submit">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
 
 
 <script src="../static/js/input_suggestions.js"></script>
