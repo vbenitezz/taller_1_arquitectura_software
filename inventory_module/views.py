@@ -48,6 +48,23 @@ def edit_product(request, id):
         product.save()
     return redirect('inventory')
 
+def get_product_add_product(request, id):
+    product_inventory = Product_Inventory.objects.get(id=id)
+    data = {
+        'name': product_inventory.name_product,
+        'quantity': product_inventory.total_quantity
+    }
+    print(data)
+    return JsonResponse(data)
+def edit_product_add_product(request, id):
+    if request.method == 'POST':
+        product_inventory = Product_Inventory.objects.get(id=id)
+        product_inventory.total_quantity = request.POST.get('edit_quantity_add_product')
+        product_inventory.save()
+    return redirect('add_product')
+
+
+
 def add_product_view(request):
     products_inventory = Product_Inventory.objects.all()
     return render(request,'add_product.html',{'products':products_inventory})
