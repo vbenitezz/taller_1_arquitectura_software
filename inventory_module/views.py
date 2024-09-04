@@ -118,10 +118,6 @@ def publish_product(request):
         id_product = int(request.POST['id_product'])
         try:
             already_published_product = Published_Product.objects.get(id_product_inventory__id_product__id = id_product)
-            print(" ================== Nombre del Producto encontrado ========================")
-            print(already_published_product.id_product_inventory.name_product)
-            print(" ================== ID del producto encontrado ========================")
-            print(already_published_product.id_product_inventory.id_product.id)
             messages.error(request,'The product you are trying to publish is already published, if you want to modify it click here')
         except Published_Product.DoesNotExist:
             id_published_product = get_object_or_404(Product_Inventory, id_product=id_product)
