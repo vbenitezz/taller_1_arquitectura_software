@@ -57,6 +57,7 @@ def get_product_add_product(request, id):
     }
     print(data)
     return JsonResponse(data)
+
 def edit_product_add_product(request, id):
     if request.method == 'POST':
         product_inventory = Product_Inventory.objects.get(id=id)

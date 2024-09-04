@@ -79,23 +79,21 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="modal fade" id="publish_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="publish_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="publish_modal_label" aria-hidden="true">
     <div class="modal-dialog">
-    <form action="/publish_product/" method="POST">
-        {% csrf_token %}
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="publish_modal"></h5>
+            <h5 class="modal-title" id="publish_modal_label"></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
         <div class="modal-body">
             <div class="container">
             <div class="row">
                 <div class="col">
+                    <form id="publish_modal_form" action="/publish_product/" method="POST">
+                    {% csrf_token %}
                     <input type="hidden" id="id_product" name="id_product" value="">
                     <input type="hidden" id="id_inventory" name="id_inventory" value="">
-
                     <label for="form-control" class="form-label">Type</label>
                     <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect01">Options</label>
@@ -128,15 +126,18 @@
             </div>
         </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
+        </form>
         </div>
     </div>
-</div> -->
+</div> 
 
 <!-- Modal -->
 <div class="modal fade" id="edit_product_modal_add_product" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
+        
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit</h1>
@@ -147,7 +148,8 @@
                     <label for="edit_name_add_product" class="form-label">Name</label>
                     <input type="text" class="form-control" id="edit_name_add_product" name="edit_name_add_product" readonly>
                 </div>
-                <form id="edit_product_form_add_product" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <form id="edit_product_form_add_product" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <input type="hidden" id="edit_id_add_product" name="edit_id_add_product">
                     <!-- <input type="hidden" id="edit_id_product_add_product" name="edit_id_product_add_product">
                     <input type="hidden" id="edit_id_inventory_add_product" name="edit_id_inventory_add_product"> -->
@@ -167,8 +169,8 @@
 <!-- Modal -->
 
 
-<!-- <script src="../static/js/input_suggestions.js"></script>
-<script src="../static/js/show_publish_modal.js"></script> -->
+<script src="../static/js/input_suggestions.js"></script>
+<script src="../static/js/show_publish_modal.js"></script>
 <script src="../static/js/edit_product_modal_add_product.js"></script>
 <script src="../static/js/delete_product.js"></script>
 
