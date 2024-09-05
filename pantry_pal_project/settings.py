@@ -17,6 +17,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+# settings.py
+#AUTH_USER_MODEL = 'access_module.Custom_User'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -57,7 +59,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware'
     
 ]
-
 ROOT_URLCONF = 'pantry_pal_project.urls'
 CORS_ALLOW_ALL_ORIGINS = True
 TEMPLATES = [

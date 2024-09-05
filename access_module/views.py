@@ -1,35 +1,17 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+#from django.shortcuts import render, redirect
+#from django.contrib.auth import login
+#from .forms import Custom_User_Creation_Form
 
-# Create your views here.
-
-def sign_up(request):
-    if request.method == 'GET':
-        return render(request, 'sign_up.html', {
-            'form': UserCreationForm
-        })
-    else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-                user.save()
-                return redirect('inventory')
-                # return HttpResponse('User created successfully')
-            except:
-                return render(request, 'sign_up.html', {
-                    'form': UserCreationForm,
-                    'error': 'Username already exists'
-                })
-        return render(request, 'sign_up.html', {
-                    'form': UserCreationForm,
-                    'error': 'Passwords do not match'
-                })
-def template_access(request):
-    return render(request, 'template.html')
-            
-        
-        
-    
-
+#def register(request):
+#    if request.method == 'POST':
+#        form = Custom_User_Creation_Form(request.POST)
+#        if form.is_valid():
+#            user = form.save()
+#            login(request, user)
+ #           if user.user_type == 'company':
+ #               return redirect('inventory')
+#            else:
+#                return redirect('home')  
+#    else:
+ #       form = Custom_User_Creation_Form()
+#    return render(request, 'register.html', {'form': form})
