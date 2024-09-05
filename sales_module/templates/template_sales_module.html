@@ -7,23 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %} Home {% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'css/add_product.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'css/add_product.css' %}"> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
   <style>
-    .card-custom {
-      height: 100%;
-    }
-
-    .card-custom img {
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .card-body-custom {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
     .image-container {
       position: relative;
       width: 100%;
@@ -67,6 +54,7 @@
   </style>
 </head>
 
+
 <body>
   <nav class="navbar navbar-expand-lg" style="background-color: #F2F2F2;">
     <div class="container-fluid">
@@ -91,47 +79,14 @@
     </div>
   </nav>
 
-  <div class="container">
-    <div class="container-md" style="background-color: #f5f5f5;">
-
-      <div class="image-container">
-        <img src="{% static 'img/home2.jpg' %}" alt="Descripción de la imagen">
-        <div class="overlay">
-          <h1>Welcome to PantryPal!</h1>
-          <p>Explore our selection of products available at reduced prices. Here you can add your preferred items to the cart and complete your purchase quickly and easily. Don’t miss out on these deals!</p>
-        </div>
-      </div>
-
-      <br>
-
-      <div class="row">
-        {% if products %}
-        {% for product in products %}
-          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-            <div class="card border border-info-subtle card-custom">
-              <img src="../../{{product.image_product}}" class="card-img-top" alt="{{product.name_product}}">
-              <div class="card-body card-body-custom">
-                <h5 class="card-title">{{product.name_product}}</h5>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Price: </strong>{{product.publish_price}}$</li>
-                <li class="list-group-item"><strong>Quantity: </strong>{{product.publish_quantity}}</li>
-                <li class="list-group-item"><strong>Category: </strong>{{product.category_product}} </li>
-                <li class="list-group-item"><strong>Description: </strong>{{product.description_product}}</li>
-                <li class="list-group-item"><strong>Pick up time: </strong>{{product.pick_up_time}}</li>
-              </ul>
-              <button type="button" class="btn btn-dark btn-sm">Add</button>
-            </div>
-          </div> 
-        {% endfor %}
-        {% else %}
-        <div class="alert alert-info" role="alert">There are no products for sale</div>
-        {% endif %}
-      </div>
-    </div>
+  <div class="container py-4">
+    {% block body %}
+    {% endblock %}
   </div>
 
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  
 </body>
 
 </html>
