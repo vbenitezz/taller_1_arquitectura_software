@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 console.log(data.price);
-                document.getElementById('image_cart_product_consumer').src = data.image; // Mostrar la imagen en el modal
-                document.getElementById('price_cart_product_consumer').innerText = `$ ${data.price}`;
+                document.getElementById('image_cart_product_consumer').src = data.image; 
+                document.getElementById('price_cart_product_consumer').innerText = `US$${data.price}`;
             });
     });
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const cart_product = {
-            price: parseInt(price_cart_product.innerText.replace('$', '').trim()),
+            price: parseInt(price_cart_product.innerText.replace('US$', '').trim()),
             quantity: parseInt(quantity_cart_product.value),
         };
 

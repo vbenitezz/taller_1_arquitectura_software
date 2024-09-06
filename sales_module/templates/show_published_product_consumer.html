@@ -82,13 +82,18 @@
             <div class="modal-body">
           
                 <form id="cart_product_consumer_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                    <div class="d-flex justify-content-center mb-3">
-                        <div class="card" style="width: 18rem;">
+                    <div class="d-flex flex-column align-items-center mb-3">
+                        <h5 class="card-title text-center">Subtotal</h5>
+                        <p class="card-text text-center" id="subtotal_cart_product_consumer">US$20</p>
+
+                        <div class="card mt-1" style="width: 18rem;">
+                            
                             <img src="" class="card-img-top" id="image_cart_product_consumer" alt="">
-                            <div class="card-body">
-                                <h5 class="card-title text-center" id="price_cart_product_consumer"></h5>
-                            </div>
+                            <h5 class="card-title text-center" id="price_cart_product_consumer"></h5>
+                            
                         </div>
+                        
+                        
                     </div>
                 
                     <div class="mb-3 d-flex align-items-center justify-content-center">
