@@ -1,0 +1,117 @@
+{% extends 'template_sales_module.html' %}
+{% block title %} Home {% endblock %}
+
+
+{% block styles %}
+<style>
+    .card-custom {
+      height: 100%;
+    }
+
+    .card-custom img {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-body-custom {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="container-md" style="background-color: #f5f5f5;">
+
+        <div class="image-container">
+            <img src="../static/img/home2.jpg" alt="Descripción de la imagen">
+            <div class="overlay">
+                <h1>Welcome to PantryPal!</h1>
+                <p>Explore our selection of products available at reduced prices. Here you can add your preferred items to the cart and complete your purchase quickly and easily. Don’t miss out on these deals!</p>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            {% if products %}
+            {% for product in products %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card border border-info-subtle card-custom">
+                    <img src="../../{{product.image_product}}" class="card-img-top" alt="{{product.name_product}}">
+                    <div class="card-body card-body-custom">
+                        <h5 class="card-title">{{product.name_product}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Price: </strong>{{product.publish_price}}$</li>
+                        <li class="list-group-item"><strong>Quantity: </strong>{{product.publish_quantity}}</li>
+                        <li class="list-group-item"><strong>Category: </strong>{{product.category_product}} </li>
+                        <li class="list-group-item"><strong>Description: </strong>{{product.description_product}}</li>
+                        <li class="list-group-item"><strong>Pick up time: </strong>{{product.pick_up_time}}</li>
+                    </ul>
+                    <!-- <button type="button" class="btn btn-dark btn-sm">Add to cart</button> -->
+                    <!-- Button trigger modal -->
+                    <button data-id_cart_product="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cart_product_consumer_modal">Add to cart</button>
+                </div>
+            </div> 
+            {% endfor %}
+            {% else %}
+            <div class="alert alert-info" role="alert">There are no products for donate</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+  
+
+<!-- Modal -->
+<div class="modal fade" id="cart_product_consumer_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add to cart</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+          
+                <form id="cart_product_consumer_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="card" style="width: 18rem;">
+                            <img src="" class="card-img-top" id="image_cart_product_consumer" alt="">
+                            <div class="card-body">
+                                <h5 class="card-title text-center" id="price_cart_product_consumer"></h5>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="mb-3 d-flex align-items-center justify-content-center">
+                        <input type="number" value="1" class="form-control text-center" id="quantity_cart_product_consumer" name="quantity_cart_product_consumer" style="flex: 1; max-width: 20%;">
+                        <div style="width: 10px;"></div> 
+                        <button type="button" class="btn btn-outline-secondary" id="remove_from_cart" style="flex: 1; max-width: 20%;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary" id="add_to_cart_consumer" data-bs-dismiss="modal">Add to cart</button>
+                        <button type="submit" class="btn btn-primary" id="go_shopping_cart_consumer">Go to cart</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      
+    </div>
+</div>
+<!-- Modal -->
+
+<script src="../static/js/add_cart_product_consumer.js"></script>
+
+
+{% endblock %}

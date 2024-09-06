@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-o=grpsl_ay339z!qk=eu%sy@a0u(c(3se9b)!v38!0!2kqppd!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,7 +45,10 @@ INSTALLED_APPS = [
     'analysis_module',
     'sales_module',
     'access_module',
-    'corsheaders'
+    'corsheaders',
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+    'channels',
+    'channels_redis'
 ]
 
 MIDDLEWARE = [
@@ -119,6 +122,35 @@ TIME_ZONE = "America/Bogota"
 USE_I18N = True
 
 USE_TZ = True
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+ASGI_APPLICATION = 'pantry_pal_project.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379),],
+        }
+    }
+}
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django_plotly_dash.finders.DashAssetFinder',
+    'django_plotly_dash.finders.DashComponentFinder'
+]
+
+PLOTLY_COMPONENTS = [
+
+    'dash_core_components',
+    'dash_html_components',
+    'dash_renderer',
+    'dpd_components'
+]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 # Static files (CSS, JavaScript, Images)

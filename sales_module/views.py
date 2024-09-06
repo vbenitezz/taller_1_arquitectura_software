@@ -7,6 +7,10 @@ from django.http import JsonResponse
 def home(request):
     products = Published_Product.objects.filter(publish_type="sale")
     return render(request, 'show_published_product_consumer.html',{'products':products})
+def home_foundation(request):
+    products = Published_Product.objects.filter(publish_type='donation')
+    return render(request, 'show_published_product_foundation.html', {'products':products})
+
 def get_product_cart_product_consumer(request, id):
     product = Published_Product.objects.get(id=id)
     print(product.publish_price)
