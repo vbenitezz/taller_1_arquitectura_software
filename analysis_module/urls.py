@@ -4,5 +4,5 @@ from analysis_module.dash_apps.finished_apps import bar_chart, bar_chart_1
 
 app_name = 'analysis' 
 urlpatterns = [
-    path('', views.home, name='analysis'),
+    path('', views.display_graphics, name='display_graphics'),
 ]
