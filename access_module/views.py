@@ -34,7 +34,7 @@ def sign_up(request):
             if user is not None:
                 login(request,user)
                 messages.success(request, 'You are now logged in')
-                return redirect('inventory' if user_type == 'restaurant chain' else 'home')
+                return redirect('inventory' if user_type == 'restaurant chain' else 'view_products_for_donate')
             else:
                 messages.error(request, 'Authentication failed. Please check your credentials.')
         else:
@@ -59,7 +59,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome, {user.name}!')
-                return redirect('inventory' if hasattr(user, 'restaurant_chain') else 'home')
+                return redirect('inventory' if hasattr(user, 'restaurant_chain') else 'view_products_for_donate')
             else:
                 messages.error(request, 'Invalid email or password.')
         else:

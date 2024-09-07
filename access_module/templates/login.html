@@ -25,12 +25,34 @@
                     <h1 class="display-1 fw-bold">Log in</h1>
                     <div class="d-flex" style="color: #808080;">
                         <p class="mb-0">Don't have an account?&nbsp;</p>
-                        <a href="#" style="text-decoration: none;color:inherit"><u>Sign Up</u></a>
+                        <a href="#" style="text-decoration: none;color:inherit" data-bs-toggle="modal"
+                        data-bs-target="#signup_modal"><u>Sign Up</u></a>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
+</div>
+
+<div class="modal fade" id="signup_modal" data-bs-backdrop="true" data-bs-keyboard="false" tabindex="-1" aria-labelledby="signup_modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">How do you want to sign up?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex justify-content-center gap-4">
+            <a href="/access/sign_up/?user_type=restaurant%20chain" class="btn btn-primary" style="width: 40%;">
+            Restaurant chain
+            </a>
+            <a href="/access/sign_up/?user_type=foundation" class="btn btn-primary" style="width: 40%;">
+            Foundation
+            </a>
+        </div>
+
+        </div>
+    </div>
+</div>
 </div>
 {% endblock %}

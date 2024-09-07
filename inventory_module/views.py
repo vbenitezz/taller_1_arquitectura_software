@@ -116,22 +116,52 @@ def search_products_suggestions(request):
 def publish_product(request):
     if request.method == 'POST':
         id_product = int(request.POST['id_product'])
-        try:
-            already_published_product = Published_Product.objects.get(id_product_inventory__id_product__id = id_product)
-            messages.error(request,'The product you are trying to publish is already published, if you want to modify it click here')
-        except Published_Product.DoesNotExist:
+        publish_product_type = request.POST['type']
+        published_quantity = int(request.POST['quantity'])
+        publish_product_pick_up_time = request.POST['pick_up_time']
+        publish_product_price = request.POST['price']
+
+        # Filtrar productos con el mismo ID
+        products_with_same_id = Published_Product.objects.filter(id_product_inventory__id_product__id=id_product)
+
+        if products_with_same_id.exists():
+            # Si hay productos con el mismo ID, intentar obtener uno con el tipo especificado
+            product_with_same_type = products_with_same_id.filter(publish_type=publish_product_type).first()
+
+            if product_with_same_type:
+                # Si existe un producto con el mismo ID y tipo, mostrar un mensaje de error
+                messages.error(request, 'The product you are trying to publish is already published. If you want to modify it, click here.')
+            else:
+                # Si no existe un producto con el mismo ID y tipo, crear uno nuevo
+                id_published_product = get_object_or_404(Product_Inventory, id_product=id_product)
+                id_published_product.total_quantity -= published_quantity
+                id_published_product.save()
+
+                published_product = Published_Product.objects.create(
+                    id_product_inventory=id_published_product,
+                    publish_type=publish_product_type,
+                    publish_quantity=published_quantity,
+                    publish_price=publish_product_price,
+                    pick_up_time=publish_product_pick_up_time
+                )
+                messages.success(request, 'Product published successfully')
+        else:
+            # Si no hay productos con el mismo ID, crear uno nuevo
             id_published_product = get_object_or_404(Product_Inventory, id_product=id_product)
-            published_quantity = int(request.POST['quantity'])
             id_published_product.total_quantity -= published_quantity
             id_published_product.save()
-            publish_product_type = request.POST['type']
-            publish_product_pick_up_time= request.POST['pick_up_time']
-            publish_product_price = request.POST['price']
-            published_product = Published_Product.objects.create(id_product_inventory = id_published_product,
-            publish_type=publish_product_type,publish_quantity=published_quantity,publish_price = publish_product_price, pick_up_time = publish_product_pick_up_time )
+
+            published_product = Published_Product.objects.create(
+                id_product_inventory=id_published_product,
+                publish_type=publish_product_type,
+                publish_quantity=published_quantity,
+                publish_price=publish_product_price,
+                pick_up_time=publish_product_pick_up_time
+            )
             messages.success(request, 'Product published successfully')
 
         return redirect('add_product')
+
 
 
 

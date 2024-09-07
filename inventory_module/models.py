@@ -29,7 +29,7 @@ class Inventory(models.Model):
 class Product_Inventory(models.Model):
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE)
     id_inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
-    total_quantity = models.PositiveIntegerField()
+    total_quantity = models.IntegerField()
     class Meta:
         unique_together = ('id_product', 'id_inventory')
     @property
