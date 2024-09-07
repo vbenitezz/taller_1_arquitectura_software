@@ -1,20 +1,6 @@
 {% extends 'template_inventory_module.html' %}
 {% block title %} Inventory {% endblock %}
 {% block body %}
-
-{% if messages %}
-    {% for message in messages %}
-        {% if 'success' in message.tags %}
-        <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-        {% else %}
-        <div class="alert alert-danger" role="alert">
-            {{ message }}
-        </div>
-        {% endif %}
-    {% endfor %}
-{% endif %}
 <!--Inventory managing-->
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
