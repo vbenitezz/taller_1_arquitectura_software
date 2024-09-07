@@ -37,7 +37,19 @@
     </div>
   </nav>
 
-
+  {% if messages %}
+  {% for message in messages %}
+      {% if 'success' in message.tags %}
+      <div class="alert alert-success" role="alert">
+          {{ message }}
+      </div>
+      {% else %}
+      <div class="alert alert-danger" role="alert">
+          {{ message }}
+      </div>
+      {% endif %}
+  {% endfor %}
+{% endif %}
   <div class="container py-4">
     {% block body %}
     {% endblock %}

@@ -128,5 +128,10 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+AUTHENTICATION_BACKENDS = [
+    'access_module.backends.Email_Backend',  # Ajusta el nombre de la app según corresponda
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'access_module.Custom_User'
