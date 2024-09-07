@@ -4,10 +4,10 @@ from django.http import JsonResponse
 
 # Create your views here.
 
-def home(request):
+def view_products_for_sale(request):
     products = Published_Product.objects.filter(publish_type="sale")
     return render(request, 'show_published_product_consumer.html',{'products':products})
-def home_foundation(request):
+def view_products_for_donate(request):
     products = Published_Product.objects.filter(publish_type='donation')
     return render(request, 'show_published_product_foundation.html', {'products':products})
 
