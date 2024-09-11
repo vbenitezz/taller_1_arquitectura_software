@@ -16,6 +16,7 @@
                         <label for="password" class="form-label">Password</label>
                         {{ login_form.password }}
                     </div>
+                    <a href="{% url 'password_reset' %}" style="text-decoration: none; color: #007bff;">Forgot your password?</a>
                     <button type="submit" class="btn btn-primary mb-2 w-50"style="margin-right: 12px;">Log in</button>
                 </div>
             </form>

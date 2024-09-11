@@ -32,6 +32,10 @@
           </li>
           
         </ul>
+        <form action="/access/logout/" method="POST">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
         
       </div>
     </div>
