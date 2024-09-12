@@ -23,12 +23,16 @@ def get_product_cart_product_consumer(request, id):
     product = Published_Product.objects.get(id=id)
     print(product.publish_price)
     print(product.image_product())
+    print(product.name_product)
+    print(product.publish_quantity)
     data = {
+        'name': product.name_product,
         'image': product.image_product(),
-        'price': product.publish_price
+        'price': product.publish_price,
+        'publish_quantity': product.publish_quantity
     }
     print(data)
     return JsonResponse(data)
 def show_shopping_cart(request):
-    return render(request, 'show_shopping_cart.html') 
+    return render(request, 'shopping_cart_consumer.html') 
 
