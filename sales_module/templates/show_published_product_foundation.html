@@ -80,38 +80,41 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-          
                 <form id="cart_product_consumer_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                    <div class="d-flex justify-content-center mb-3">
-                        <div class="card" style="width: 18rem;">
+                    <div class="d-flex flex-column align-items-center mb-3">
+                        <h5 class="card-title text-center">Subtotal</h5>
+                        <p class="card-text text-center" id="subtotal_cart_product_consumer">US$0</p>
+
+                        <div class="card mt-1" style="width: 18rem;">
+                            <input type="hidden" id="name_cart_product_consumer">
+                            <input type="hidden" id="type_cart_product" value="donation">
+                            <input type="hidden" id="publish_quantity_cart_product_consumer">
+                            <input type="hidden" id="id_product_cart">
+
                             <img src="" class="card-img-top" id="image_cart_product_consumer" alt="">
-                            <div class="card-body">
-                                <h5 class="card-title text-center" id="price_cart_product_consumer"></h5>
-                            </div>
+                            <h5 class="card-title text-center" id="price_cart_product_consumer"></h5>
                         </div>
                     </div>
-                
-                    <div class="mb-3 d-flex align-items-center justify-content-center">
-                        <input type="number" value="1" class="form-control text-center" id="quantity_cart_product_consumer" name="quantity_cart_product_consumer" style="flex: 1; max-width: 20%;">
-                        <div style="width: 10px;"></div> 
-                        <button type="button" class="btn btn-outline-secondary" id="remove_from_cart" style="flex: 1; max-width: 20%;">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                    
+                    <div class="d-flex justify-content-center">
+                        <input style="width: 18rem;" type="number" class="form-control" id="quantity_cart_product_consumer" name="quantity_cart_product_consumer">
                     </div>
+                    <br>
+                
+                    
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-secondary" id="add_to_cart_consumer" data-bs-dismiss="modal">Add to cart</button>
-                        <button type="submit" class="btn btn-primary" id="go_shopping_cart_consumer">Go to cart</button>
+                        <button type="submit" class="btn btn-primary" id="go_shopping_cart_foundation">Go to cart</button>
                     </div>
                 </form>
             </div>
         </div>
-      
     </div>
 </div>
 <!-- Modal -->
 
-<script src="../static/js/add_cart_product_consumer.js"></script>
+<script src="../static/js/add_cart_product_foundation.js"></script>
 
 
 {% endblock %}

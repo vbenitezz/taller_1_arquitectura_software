@@ -33,7 +33,6 @@ def sign_up(request):
             user = authenticate(username=cleaned_data['email'], password=cleaned_data['password1'])
             if user is not None:
                 login(request,user)
-                messages.success(request, 'You are now logged in')
                 return redirect('inventory' if user_type == 'restaurant chain' else 'view_products_for_donate')
             else:
                 messages.error(request, 'Authentication failed. Please check your credentials.')

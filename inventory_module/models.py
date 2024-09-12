@@ -53,9 +53,6 @@ class Published_Product(models.Model):
     publish_quantity = models.PositiveIntegerField()
     publish_price = models.PositiveIntegerField()
     pick_up_time = models.TimeField()
-    def clean(self):
-        if self.publish_quantity > self.id_product_inventory.total_quantity:
-            raise ValidationError(f'The published quantity must not exceed the available inventory quantity.')
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
         shopping_cart_container.innerHTML = '<p>Your cart is empty</p>';
     } else{
         shopping_cart.forEach((product, index) => {
-            if(product.type==="sale"){
+            if(product.type==="donation"){
                 const div_product = document.createElement('div');
                 div_product.classList.add('card', 'mb-3');
                 div_product.style.maxWidth = '300px';
