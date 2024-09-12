@@ -26,6 +26,19 @@
 
 
 {% block body %}
+{% if messages %}
+    {% for message in messages %}
+        {% if 'success' in message.tags %}
+            <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+{% endfor %}
+{% endif %}
 <div class="container">
     <div class="container-md" style="background-color: #f5f5f5;">
 

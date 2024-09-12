@@ -48,7 +48,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 type: type_cart_product.value
             };
             let add_cart_product = JSON.parse(localStorage.getItem('add_cart_product')) || [];
-            add_cart_product.push(cart_product);
+
+            // Buscar el índice del producto en el carrito
+            const index = add_cart_product.findIndex(product => product.name === cart_product.name && product.type === cart_product.type);
+
+            if (index !== -1) {
+                // Si el producto ya existe, actualizar la cantidad
+                add_cart_product[index].quantity += cart_product.quantity;
+            } else {
+                // Si el producto no existe, agregar uno nuevo
+                add_cart_product.push(cart_product);
+            }
+
+            // Guardar el carrito actualizado en el localStorage
             localStorage.setItem('add_cart_product', JSON.stringify(add_cart_product));
 
             update_subtotal_cart_product_consumer();
