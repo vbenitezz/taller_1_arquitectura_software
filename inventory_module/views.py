@@ -4,13 +4,22 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.db import IntegrityError
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+
 
 def home_restaurant_chain(request):
     return render(request, 'template_inventory_module.html')
+
+@login_required
 def show_product(request):
-    products = Product.objects.all()
-    return render(request, 'create_product.html', {'products': products})
+    user = request.user
+    if hasattr(user, 'restaurant_chain'):
+        products = Product.objects.all()
+        return render(request, 'create_product.html', {'products': products})
+    else:
+        return redirect('view_products_for_donate')
+    
 def create_product(request):
     name = request.POST['input_name']
     category = request.POST['input_category']
@@ -69,10 +78,14 @@ def delete_product_add_product(request, id):
     return redirect('add_product')
 
 
-
+@login_required
 def add_product_view(request):
-    products_inventory = Product_Inventory.objects.all()
-    return render(request,'add_product.html',{'products':products_inventory})
+    user = request.user
+    if hasattr(user, 'restaurant_chain'):
+        products_inventory = Product_Inventory.objects.all()
+        return render(request,'add_product.html',{'products':products_inventory})
+    else:
+        return redirect('view_products_for_donate')
 
 def add_product_function(request):
     name = request.POST['input_name']
