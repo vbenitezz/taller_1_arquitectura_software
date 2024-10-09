@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 
                 document.getElementById('name_cart_product_consumer').value = data.name;
-                
                 document.getElementById('image_cart_product_consumer').src = data.image; 
                 document.getElementById('price_cart_product_consumer').innerText = `US$${data.price}`;
                 document.getElementById('publish_quantity_cart_product_consumer').value = data.publish_quantity;
@@ -33,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         quantity = parseInt(quantity_cart_product.value);
         id = parseInt(id_product_cart.value);
         publish_quantity = parseInt(publish_quantity_cart_product.value);  
+        img = document.getElementById('image_cart_product_consumer').src;
         if (quantity > publish_quantity) {
             event.preventDefault();
             alert(`The amount is not valid`);
@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
             new_quantity = publish_quantity-quantity;
             update_published_quantity(id, new_quantity);
             const cart_product = {
+                id:id,
+                img:img,
                 price: parseInt(price_cart_product.innerText.replace('US$', '').trim()),
                 quantity: parseInt(quantity_cart_product.value),
                 name: name_cart_product.value,

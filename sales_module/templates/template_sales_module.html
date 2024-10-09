@@ -83,6 +83,9 @@
             {% endif %}
             
           </li>
+          <li class="nav-item"></li>
+            <a class="nav-link active" aria-current="page" href="{% url 'show_orders' %}">Orders</a>
+          </li>
         </ul>
         {% if user.is_authenticated %}
         <form action="{% url 'logout' %}" method="POST">
