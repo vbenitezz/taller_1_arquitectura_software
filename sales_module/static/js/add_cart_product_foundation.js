@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             new_quantity = publish_quantity-quantity;
             update_published_quantity(id, new_quantity);
             const cart_product = {
+                id:id,
                 price: parseInt(price_cart_product.innerText.replace('US$', '').trim()),
                 quantity: parseInt(quantity_cart_product.value),
                 name: name_cart_product.value,
