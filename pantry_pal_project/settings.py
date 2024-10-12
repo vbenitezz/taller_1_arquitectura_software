@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'channels',
-    'channels_redis'
+    'channels_redis',
+    'django_bootstrap_icons',
 ]
 
 MIDDLEWARE = [

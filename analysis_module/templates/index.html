@@ -1,22 +1,48 @@
 {% extends 'template.html' %}
-{% block title %} Analisys {% endblock %}
+{% block title %} Analysis {% endblock %}
 {% block content %}
-{%load plotly_dash%}
+{% load plotly_dash %}
+{% load bootstrap_icons %}
 
+<<<<<<< HEAD
 <div class="container py-4">
     <div class="row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <div class="card">
                 <div class="card-header">
                     Pie Chart: Sale products Vs. Donation products
+=======
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="card">
+                    <div class="card-header">
+                        Bar Chart: Products published for sale Vs. Products published for donate
+                    </div>
+                    <div class="card-body">
+                        <div class="{% plotly_class name='SimplePieChart' %} card" style="height: 100%; width: 100%;">
+                            {% plotly_app name='SimplePieChart' ratio=0.9 %}
+                        </div>
+                    </div>
+>>>>>>> c2912f4 (feat(analysis_module): char showing the percentage of producs sold and donated, and customize chart works fine)
                 </div>
-                <div class="card-body">
-                    <div class="{% plotly_class name='SimplePieChart' %} card" style="height: 100%; width: 100%;">
-                        {% plotly_app name='SimplePieChart' ratio=0.9%}
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        Products sold Vs. Product donated
+                    </div>
+                    <div class="card-body">
+                        <div class="{% plotly_class name='SimplePieChart1' %} card" style="height: 100%; width: 100%;">
+                            {% plotly_app name='SimplePieChart1' ratio=0.9 %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-header">
@@ -26,10 +52,20 @@
                     <div class="{% plotly_class name='SimplePieChart1' %} card" style="height: 100%; width: 100%;">
                         {% plotly_app name='SimplePieChart1' ratio=0.9%}
                     </div>
+=======
+        <div class="card mt-4">
+            <div class="card-header">
+                Inventory
+            </div>
+            <div class="card-body">
+                <div class="{% plotly_class name='BarChart' %} card" style="height: 100%; width: 100%;">
+                    {% plotly_app name='BarChart' ratio=0.9 %}
+>>>>>>> c2912f4 (feat(analysis_module): char showing the percentage of producs sold and donated, and customize chart works fine)
                 </div>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <div class="card">
         <div class="card-header">
             Bar Chart: Products sold Vs. Product donated Vs. Product wasted
@@ -40,6 +76,9 @@
             </div>
         </div>
     </div>
+=======
+</main>
+>>>>>>> c2912f4 (feat(analysis_module): char showing the percentage of producs sold and donated, and customize chart works fine)
 </div>
 
 
