@@ -52,7 +52,6 @@ def update_bar_chart(value):
     )
 
     layout = go.Layout(
-        title="Inventory by Category",
         xaxis={'title': 'Product Categories'},
         yaxis={'title': 'Product Count'},
         paper_bgcolor='#FFFFFF',

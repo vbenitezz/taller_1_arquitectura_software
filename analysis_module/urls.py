@@ -5,4 +5,5 @@ from analysis_module.dash_apps.finished_apps import pie_chart, pie_chart_1, bar_
 app_name = 'analysis' 
 urlpatterns = [
     path('', views.display_graphics, name='display_graphics'),
+    path('customize_chart/', views.customize_chart, name='customize_chart')
 ]

@@ -3,7 +3,7 @@ from dash import html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 from django_plotly_dash import DjangoDash
-from sales_module.models import Published_Product
+from inventory_module.models import Published_Product
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -26,7 +26,7 @@ def update_pie_chart(value):
     products_for_sale = Published_Product.objects.filter(publish_type='sale').count()
     
     labels = ['Sale', 'Donation']
-    values = [products_for_sale, products_for_donation]
+    values = [products_for_sale,products_for_donation]
 
     # Limitar los datos según el valor del slider
     labels = labels[:value]

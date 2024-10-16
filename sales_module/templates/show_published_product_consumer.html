@@ -71,7 +71,7 @@
 
   
 
-<!-- Modal -->
+<!-- Modal Add to Cart -->
 <div class="modal fade" id="cart_product_consumer_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 450px;">
         <div class="modal-content">
@@ -108,7 +108,8 @@
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-secondary" id="add_to_cart_consumer" data-bs-dismiss="modal">Add to cart</button>
-                        <button type="submit" class="btn btn-primary" id="go_shopping_cart_consumer">Go to cart</button>
+                        <!-- <button type="submit" class="btn btn-primary" id="go_shopping_cart_consumer">Go to cart</button> -->
+                        <button data-id_cart_product="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shopping_cart_consumer_modal">Go to cart</button>
                     </div>
                 </form>
             </div>
@@ -116,9 +117,28 @@
       
     </div>
 </div>
-<!-- Modal -->
+<!-- Modal Add to Cart -->
+
+<!-- Modal Shopping Cart -->
+<div class="modal fade" id="shopping_cart_consumer_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Shopping Cart</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal_body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#order_modal" id="generate_order">Generate Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Shopping Cart -->
 
 <script src="../static/js/add_cart_product_consumer.js"></script>
-
+<script src="../static/js/shopping_cart_consumer.js"></script>
 
 {% endblock %}
