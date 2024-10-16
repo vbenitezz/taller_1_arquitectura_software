@@ -42,35 +42,41 @@ def customize_chart(request):
 
             data = []
             if '1' in selected_variables:
-                data.append(('Products Sold', Order.objects.filter(customer_id = None).count()))
+                data.append(('Products Sold', Order.objects.filter(customer_id=None).count()))
             if '2' in selected_variables:
-                data.append(('Products Donated', Order.objects.exclude(customer_id = None).count()))
+                data.append(('Products Donated', Order.objects.exclude(customer_id=None).count()))
             if '3' in selected_variables:
                 data.append(('Products in Inventory', Product_Inventory.objects.count()))
             if '4' in selected_variables:
                 data.append(('Products Published', Published_Product.objects.count()))
             if '5' in selected_variables:
-                data.append(('Producst published for sale', Published_Product.objects.filter(publish_type='sale').count()))
+                data.append(('Products Published for Sale', Published_Product.objects.filter(publish_type='sale').count()))
             if '6' in selected_variables:
-                data.append(('Products published for donate', Published_Product.objects.filter(publish_type='donation').count()))
+                data.append(('Products Published for Donation', Published_Product.objects.filter(publish_type='donation').count()))
 
-            if chart_type == '1': 
+            if chart_type == '1':  # Pie chart
                 labels = [item[0] for item in data]
                 values = [item[1] for item in data]
                 chart = go.Figure(
                     data=[go.Pie(labels=labels, values=values)],
                     layout=go.Layout(title='Pie Chart: Selected Variables')
                 )
-            elif chart_type == '2':  
+            elif chart_type == '2':  # Bar chart
                 labels = [item[0] for item in data]
                 values = [item[1] for item in data]
                 chart = go.Figure(
                     data=[go.Bar(x=labels, y=values)],
                     layout=go.Layout(title='Bar Chart: Selected Variables', xaxis={'title': 'Categories'}, yaxis={'title': 'Count'})
                 )
+
             chart_html = chart.to_html(full_html=False)
 
-            return render(request, 'customize.html', {'is_chart': 1, 'chart': chart_html})
+            # Retorna tanto el gráfico como los datos en formato tabla
+            return render(request, 'customize.html', {
+                'is_chart': 1,
+                'chart': chart_html,
+                'summary_data': data  # Pasamos los datos para la tabla
+            })
 
         return render(request, 'customize.html', {'is_chart': 0})
     else:
