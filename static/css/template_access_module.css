@@ -1,0 +1,65 @@
+
+.log_in_btn{
+    background-color: #0E272C;
+    color:white;
+
+}
+.log_in_btn:hover{
+    background-color: #4EBC95;
+    color:white;
+    transition: background-color 0.3s ease; 
+
+}
+.forgot_password {
+    text-decoration: none;
+    color:black;
+    position: relative;
+}
+
+.forgot_password::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%; 
+    background-color: #F9AA41; 
+    transition: width 0.3s ease, left 0.3s ease; 
+}
+
+.forgot_password:hover::after {
+    width: 100%; 
+    left: 0; 
+}
+
+.forgot_password:hover {
+    color: #F9AA41; 
+    transition: color 0.3s ease; 
+}
+
+.sign_up {
+    text-decoration: none;
+    color:white;
+    position: relative;
+}
+
+.sign_up::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%; 
+    background-color: #F9AA41; 
+    transition: width 0.3s ease, left 0.3s ease; 
+}
+
+.sign_up:hover::after {
+    width: 100%; 
+    left: 0; 
+}
+
+.sign_up:hover {
+    color: #F9AA41; 
+    transition: color 0.3s ease; 
+}

@@ -116,7 +116,7 @@ PLOTLY_COMPONENTS = [
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS = [BASE_DIR / "static",]
 AUTHENTICATION_BACKENDS = [
     'access_module.backends.Email_Backend',
     'django.contrib.auth.backends.ModelBackend',

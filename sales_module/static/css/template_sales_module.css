@@ -1,0 +1,90 @@
+
+.image-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    /* height: 400px; */
+    overflow: hidden;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: auto;
+    
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .overlay h1 {
+    margin: 0;
+    font-size: 2.5em;
+    line-height: 1.2;
+  }
+
+  .overlay p {
+    font-size: 1.5em;
+    margin-top: 10px;
+  }
+
+.navbar-nav .nav-link {
+
+    position: relative;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%; 
+    background-color: #F9AA41; 
+    transition: width 0.3s ease, left 0.3s ease; 
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%; 
+    left: 0; 
+}
+
+.navbar-nav .nav-link:hover {
+    color: #F9AA41; 
+    transition: color 0.3s ease; /* Transición suave para el color del texto */
+}
+.access_btn{
+    background-color: #325F74;
+    color:white;
+
+}
+.access_btn:hover{
+    background-color: #3C93AF;
+    transition: background-color 0.3s ease; 
+    color:white;
+
+}
+
+.add_cart_btn{
+    background-color: #0E272C;
+    color:white;
+
+}
+.add_cart_btn:hover{
+    background-color: #4EBC95;
+    color:white;
+    transition: background-color 0.3s ease; 
+
+}

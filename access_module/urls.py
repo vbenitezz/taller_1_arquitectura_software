@@ -12,4 +12,5 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
 
+
 ]
