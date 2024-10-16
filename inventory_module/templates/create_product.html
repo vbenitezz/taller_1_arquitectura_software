@@ -41,7 +41,7 @@
                 <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
             <div class="mb-3 d-grid gap-2">
-              <button class="btn btn-primary" type="submit">Create</button>
+              <button class="btn custom_btn" type="submit">Create</button>
             </div>
         </form>
     </div>
@@ -69,10 +69,10 @@
                         <td>
                             <div class="btn-group">
 
-                                <button data-id="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_product_modal">Edit</button>
+                                <button data-id="{{product.id}}" type="button" class="btn edit_btn" data-bs-toggle="modal" data-bs-target="#edit_product_modal">Edit</button>
                                 <a href="delete_product/{{product.id}}" class="btn btn-primary btn_delete_product">Delete</a>
                                 {% if product.image %}
-                                <button data-id="{{product.id}}" data-name="{{product.name}}" data-category="{{product.category}}" data-sale_price="{{product.sale_price}}" data-description="{{product.description}}" data-image="{{product.image.url}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show_details_modal">Details</button>
+                                <button data-id="{{product.id}}" data-name="{{product.name}}" data-category="{{product.category}}" data-sale_price="{{product.sale_price}}" data-description="{{product.description}}" data-image="{{product.image.url}}" type="button" class="btn details_btn" data-bs-toggle="modal" data-bs-target="#show_details_modal">Details</button>
                                 {% endif %}
                             </div>
                         </td>

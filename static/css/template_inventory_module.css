@@ -1,0 +1,96 @@
+
+.navbar-nav .nav-link {
+
+    position: relative;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%; 
+    background-color: #F9AA41; 
+    transition: width 0.3s ease, left 0.3s ease; 
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%; 
+    left: 0; 
+}
+
+.navbar-nav .nav-link:hover {
+    color: #F9AA41; 
+    transition: color 0.3s ease; /* Transición suave para el color del texto */
+}
+.log_out_btn{
+    border:none;
+    background-color: #325F74;
+    color:white;
+
+}
+.log_out_btn:hover{
+    background-color: #3C93AF;
+    transition: background-color 0.3s ease; 
+    color:white;
+
+}
+
+.custom_btn{
+    background-color: #0E272C;
+    color:white;
+
+}
+.custom_btn:hover{
+    background-color: #4EBC95;
+    color:white;
+    transition: background-color 0.3s ease; 
+
+}
+.edit_btn{
+    border:none;
+    background-color: #325F74;
+    color:white;
+
+}
+.edit_btn:hover{
+    background-color: #578ca5;
+    color:white;
+    transition: background-color 0.3s ease; 
+}
+
+.btn_delete_product{
+    border:none;
+
+    background-color: #a72c2c;
+    color:white;
+}
+.btn_delete_product:hover{
+    background-color: #ae4747;
+    color:white;
+    transition: background-color 0.3s ease; 
+}
+
+.publish_btn{
+    border:none;
+    background-color: #F9AA41;
+    color:white;
+}
+.publish_btn:hover{
+    background-color: #c17612;
+    color:white;
+    transition: background-color 0.3s ease; 
+}
+
+
+.details_btn{
+    border:none;
+    background-color: #F9AA41;
+    color:white;
+}
+.details_btn:hover{
+    background-color: #c17612;
+    color:white;
+    transition: background-color 0.3s ease; 
+}

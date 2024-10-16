@@ -1,10 +1,10 @@
 
-.log_in_btn{
+.entry_btn{
     background-color: #0E272C;
     color:white;
 
 }
-.log_in_btn:hover{
+.entry_btn:hover{
     background-color: #4EBC95;
     color:white;
     transition: background-color 0.3s ease; 
@@ -37,13 +37,13 @@
     transition: color 0.3s ease; 
 }
 
-.sign_up {
+.change_access {
     text-decoration: none;
     color:white;
     position: relative;
 }
 
-.sign_up::after {
+.change_access::after {
     content: '';
     position: absolute;
     width: 0;
@@ -54,12 +54,12 @@
     transition: width 0.3s ease, left 0.3s ease; 
 }
 
-.sign_up:hover::after {
+.change_access:hover::after {
     width: 100%; 
     left: 0; 
 }
 
-.sign_up:hover {
+.change_access:hover {
     color: #F9AA41; 
     transition: color 0.3s ease; 
 }

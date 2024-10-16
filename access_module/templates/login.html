@@ -2,23 +2,23 @@
 {% block title %} Log in {% endblock %}
 {% block body %}
 <div class="overlay">
-    <div class="container rounded form_container" style="background-color: #325f74; padding: 20px;">
-        <div class="container w-70 rounded"style="background-color: #ffff">
+    <div class="container rounded" style="background-color: #325f74; padding: 20px;height: 600px;">
+        <div class="container w-70 rounded"style="background-color: #ffff;height: 560px;">
             <div class="row">
                 <div class="col-6 p-0">
-                    <div class="container rounded d-flex flex-column justify-content-center align-items-center h-100" style="background-color:#3C93AF;Color: white;" >
+                    <div class="container rounded d-flex flex-column justify-content-center align-items-center" style="background-color:#3C93AF;Color: white;height: 560px;" >
                         <h1 class="display-1 fw-bold">Log in</h1>
                         <div class="d-flex" style="color: white;">
                             <p class="mb-0">Don't have an account?&nbsp;</p>
-                            <a href="#" class="sign_up" data-bs-toggle="modal"
-                            data-bs-target="#signup_modal"><u>Sign Up</u></a>
+                            <a href="#" class="change_access" data-bs-toggle="modal"
+                            data-bs-target="#signup_modal">Sign Up</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-6 p-0">
                     <form action="{% url 'login' %}" method="POST" id="login_form">
                     {% csrf_token %}
-                        <div class="container rounded d-flex flex-column justify-content-center align-items-center p-2" style="background-color:white;">
+                        <div class="container rounded d-flex flex-column justify-content-center align-items-center p-2" style="background-color:white;height: 560px;">
                             <div class="form-group w-75 offset-md-2"">
                                 <label for="username" class="form-label">Email</label>
                                 {{ login_form.username }}
@@ -28,7 +28,7 @@
                                 {{ login_form.password }}
                             </div>
                             <a href="{% url 'password_reset' %}" class="forgot_password">Forgot your password?</a>
-                            <button type="submit" class="btn log_in_btn mb-2 mt-2 w-50"style="margin-right: 12px;">Log in</button>
+                            <button type="submit" class="btn entry_btn mb-2 mt-2 w-50"style="margin-right: 12px;">Log in</button>
                         </div>
                     </form>
                 </div>

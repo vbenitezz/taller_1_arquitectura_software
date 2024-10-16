@@ -1,13 +1,13 @@
 {% extends 'template_access_module.html' %}
 {% block title %} Sign up {% endblock %}
 {% block body %}
-<div class="container rounded" style="background-color: #808080; padding: 20px;">
-    <div class="container w-70 rounded"style="background-color: #ffff">
+<div class="container rounded" style="background-color: #325f74; padding: 20px;">
+    <div class="container w-70 h-100 rounded"style="background-color: #ffff">
         <div class="row">
             <div class="col-6 p-0">
                 <form action="{% url 'sign_up' %}" method="POST" id="signup_form">
                     {% csrf_token %}
-                <div class="container rounded d-flex flex-column justify-content-center align-items-center p-2" style="background-color:#E6E6E6;" >
+                <div class="container rounded d-flex flex-column justify-content-center align-items-center p-2" style="background-color:white;" >
                     <input type="hidden" name="user_type" value="{{ user_type }}">
                     <div class="form-group w-75 offset-md-2">
                         <label for="nit" class="form-label">Nit</label>
@@ -29,16 +29,16 @@
                         <label for="password2" class="form-label">Confirm Password</label>
                         {{ signup_form.password2 }}
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2 w-50"style="margin-right: 12px;">Sign Up</button>
+                    <button type="submit" class="btn entry_btn mb-2 w-50"style="margin-right: 12px;">Sign Up</button>
                 </div>
             </form>
             </div>
             <div class="col-6 p-0">
-                <div class="container rounded d-flex flex-column justify-content-center align-items-center h-100" style="background-color:white;Color: #808080;" >
+                <div class="container rounded d-flex flex-column justify-content-center align-items-center h-100" style="background-color:#3C93AF;Color: white;" >
                     <h1 class="display-1 fw-bold">Sign up</h1>
-                    <div class="d-flex" style="color: #808080;">
-                        <p class="mb-0">Already have an account?&nbsp;</p>
-                        <a href="{% url 'login' %}" style="text-decoration: none;color:inherit"><u>Log in</u></a>
+                    <div class="d-flex">
+                        <p class="mb-0" style="color: white;">Already have an account?&nbsp;</p>
+                        <a href="{% url 'login' %}" class="change_access">Log in</a>
                     </div>
                 </div>
             </div>

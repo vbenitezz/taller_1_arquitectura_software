@@ -20,7 +20,7 @@
                 <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
             <div class="mb-3 d-grid gap-2">
-                <button class="btn btn-primary" type="submit">Add</button>
+                <button class="btn custom_btn" type="submit">Add</button>
             </div>
         </form>
     </div>
@@ -50,10 +50,10 @@
 
                         <td>
                             <div class="btn-group">
-                                <button data-id_add_product="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_product_modal_add_product">Edit</button>
-                                <a href="delete_product_add_product/{{product.id}}" class="btn btn-primary btn_delete_product">Delete</a>
+                                <button data-id_add_product="{{product.id}}" type="button" class="btn edit_btn" data-bs-toggle="modal" data-bs-target="#edit_product_modal_add_product">Edit</button>
+                                <a href="delete_product_add_product/{{product.id}}" class="btn btn_delete_product">Delete</a>
                                 <!-- Button trigger modal -->
-                                <button data-name="{{ product.name_product }}" data-quantity="{{ product.total_quantity }}" data-price="{{ product.sale_price_product }}" data-id="{{ product.id_product.id }}" data-id-inventory="{{ product.id_inventory.id }}" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                <button data-name="{{ product.name_product }}" data-quantity="{{ product.total_quantity }}" data-price="{{ product.sale_price_product }}" data-id="{{ product.id_product.id }}" data-id-inventory="{{ product.id_inventory.id }}" type="button" class="btn publish_btn" data-bs-toggle="modal"
                                     data-bs-target="#publish_modal">
                                     Publish
                                 </button>

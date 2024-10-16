@@ -1,0 +1,38 @@
+.log_out_btn{
+    border:none;
+    background-color: #325F74;
+    color:white;
+
+}
+.log_out_btn:hover{
+    background-color: #3C93AF;
+    transition: background-color 0.3s ease; 
+    color:white;
+
+}
+
+.navbar-nav .nav-link {
+
+    position: relative;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%; 
+    background-color: #F9AA41; 
+    transition: width 0.3s ease, left 0.3s ease; 
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%; 
+    left: 0; 
+}
+
+.navbar-nav .nav-link:hover {
+    color: #F9AA41; 
+    transition: color 0.3s ease; /* Transición suave para el color del texto */
+}
