@@ -87,6 +87,9 @@ def buy_order_consumer(request):
                 order=order,
                 quantity=int(product['quantity'])
                 )
+            if(published_product.publish_quantity==0):
+                print("ENTROOOO")
+                published_product.delete()
         return JsonResponse({'status': 'success', 'message': 'Quantity updated successfully'})
     
 
@@ -105,6 +108,11 @@ def buy_order_foundation(request):
         )
         for product in products:
             published_product = Published_Product.objects.get(id=int(product['id']))
+            print("PRODUCTO: ")
+            print(published_product.name_product)
+            print("CANTIDAD: ")
+            print(published_product.publish_quantity)
+
             Cart_Product.objects.create(
                 image=product.image,
                 name=published_product.name_product,
@@ -113,6 +121,7 @@ def buy_order_foundation(request):
                 quantity=int(product['quantity'])
                 )
             if(published_product.publish_quantity==0):
+                print("ENTROOOO")
                 published_product.delete()
             
         return JsonResponse({'status': 'success', 'message': 'Quantity updated successfully'})
@@ -124,7 +133,9 @@ def show_orders(request):
         orders = Order.objects.filter(customer=user)
         return  render(request, 'show_orders.html', {'orders':orders})
     else:
-        
+        p = Published_Product.objects.filter(publish_quantity=0);
+        for x in p.all():
+            x.delete()
         orders = Order.objects.filter(customer__isnull=True)
         for order in list(orders):
             print(f'PRODUCTOS DE LA ORDEN: {order.id}')
