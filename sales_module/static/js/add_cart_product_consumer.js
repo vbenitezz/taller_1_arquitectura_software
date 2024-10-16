@@ -70,10 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const cart_product_consumer_modal = bootstrap.Modal.getInstance(document.getElementById('cart_product_consumer_modal'));
             cart_product_consumer_modal.hide();
-
-            if (!event.isTrusted || event.target !== goShoppingCartButton) {
-                location.reload();
-            }
         }
         
     });
@@ -116,6 +112,9 @@ function update_published_quantity(id,new_quantity){
     .then(data => {
         if (data.status === 'success') {
             alert('Product added to cart successfully');
+            setTimeout(function() {
+                location.reload();
+            }, 100);
         } else {
             alert('Error: ' + data.message);
         }
