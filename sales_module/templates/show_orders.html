@@ -13,6 +13,11 @@
     <ul>
       {% for order in orders %}
         <li>Orden ID: {{ order.id }} - Total: ${{ order.total_price }} - Payment Method: {{ order.payment_method }}</li>
+        <ul>
+          {% for product in order.products.all %}
+          <p>Name: {{product.name}} - Price: {{product.price}}</p>
+          {% endfor %}
+        </ul>
       {% endfor %}
     </ul>
   {% else %}

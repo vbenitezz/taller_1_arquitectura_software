@@ -21,6 +21,8 @@ class Order(models.Model):
     total_price = models.IntegerField()
 
 class Cart_Product(models.Model):
-    cart_product = models.ForeignKey(Published_Product,null=True, on_delete=models.CASCADE)
+    image = models.ImageField(default='default_image.jpg');
+    name = models.CharField(max_length=250,default='');
+    price = models.IntegerField(default=0);
     order =  models.ForeignKey(Order, on_delete=models.CASCADE,null=True,related_name='products')
     quantity = models.IntegerField(null=True)

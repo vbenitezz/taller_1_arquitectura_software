@@ -42,6 +42,7 @@
         <div class="row">
             {% if products %}
             {% for product in products %}
+            {% if product.publish_quantity > 0 %}
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card border border-info-subtle card-custom">
                     <img src="../../{{product.image_product}}" class="card-img-top" alt="{{product.name_product}}">
@@ -60,6 +61,7 @@
                     <button data-id_cart_product="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cart_product_consumer_modal">Add to cart</button>
                 </div>
             </div> 
+            {% endif %}
             {% endfor %}
             {% else %}
             <div class="alert alert-info" role="alert">There are no products for sale</div>
@@ -136,9 +138,34 @@
         </div>
     </div>
 </div>
-<!-- Modal Shopping Cart -->
-
+<!-- Order Modal -->
+<div class="modal fade" id="order_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Order</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="order_container">
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div class="d-flex">
+                        <h5 class="card-title text-center">Total: </h5>
+                        <p class="card-text text-center ms-2" id="total_order">US$</p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-success" id="buy_order">Buy</button>
+                        <button type="button" class="btn btn-danger" id="cancel_order" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
 <script src="../static/js/add_cart_product_consumer.js"></script>
 <script src="../static/js/shopping_cart_consumer.js"></script>
+<script src="../static/js/order_consumer.js"></script>
 
 {% endblock %}

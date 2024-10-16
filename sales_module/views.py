@@ -57,9 +57,8 @@ def update_product_quantity(request):
             product.publish_quantity = new_quantity
             product.save()
             
-            updated_product = Published_Product.objects.get(id=product_id)
-            print(f"Updated quantity: {updated_product.publish_quantity}")
-            
+            print(f"Updated quantity: {product.publish_quantity}")
+
             return JsonResponse({'status': 'success', 'message': 'Quantity updated successfully'})
         except Published_Product.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Product not found'}, status=404)
@@ -74,6 +73,7 @@ def buy_order_consumer(request):
     if request.method == 'POST':
         data =  json.loads(request.body)
         products=json.loads(data['products'])
+        print(products)
         order = Order.objects.create(
             payment_method = "cash",
             total_price =  data['total_price']
@@ -81,7 +81,9 @@ def buy_order_consumer(request):
         for product in products:
             published_product = Published_Product.objects.get(id=int(product['id']))
             Cart_Product.objects.create(
-                cart_product=published_product,
+                image=product['img'],
+                name=published_product.name_product,
+                price=published_product.publish_price,
                 order=order,
                 quantity=int(product['quantity'])
                 )
@@ -104,10 +106,15 @@ def buy_order_foundation(request):
         for product in products:
             published_product = Published_Product.objects.get(id=int(product['id']))
             Cart_Product.objects.create(
-                cart_product=published_product,
+                image=product.image,
+                name=published_product.name_product,
+                price=published_product.publish_price,
                 order=order,
                 quantity=int(product['quantity'])
                 )
+            if(published_product.publish_quantity==0):
+                published_product.delete()
+            
         return JsonResponse({'status': 'success', 'message': 'Quantity updated successfully'})
     
 def show_orders(request):
@@ -122,7 +129,7 @@ def show_orders(request):
         for order in list(orders):
             print(f'PRODUCTOS DE LA ORDEN: {order.id}')
             for product in order.products.all():
-                print(f'{product.cart_product.name_product}')
+                print(f'{product.name}')
         return  render(request, 'show_orders.html', {'orders':orders})
 
 

@@ -6,8 +6,7 @@ generate_order.addEventListener('click', function() {
     order_container = document.getElementById('order_container');
     total_price_container = document.getElementById('total_order');
     let total_price=0;
-    let product_total_price
-    console.log(products);
+    let product_total_price;
     order_container.innerHTML="";
     if (products) {
         products.forEach(product => {
