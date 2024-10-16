@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from sales_module.models import Published_Product
-from inventory_module.models import Product_Inventory, Published_Product
-from sales_module.models import Order
+from sales_module.models import Published_Product, Order
+from inventory_module.models import Product_Inventory
 import plotly.graph_objs as go
 
 # Variables predefinidas para las opciones seleccionadas
