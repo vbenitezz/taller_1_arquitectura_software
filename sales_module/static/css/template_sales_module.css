@@ -88,3 +88,13 @@
     transition: background-color 0.3s ease; 
 
 }
+.details_btn{
+    border:none;
+    background-color: #F9AA41;
+    color:white;
+}
+.details_btn:hover{
+    background-color: #c17612;
+    color:white;
+    transition: background-color 0.3s ease; 
+}
