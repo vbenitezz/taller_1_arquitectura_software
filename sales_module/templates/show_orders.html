@@ -1,26 +1,56 @@
 {% extends "template_sales_module.html" %}
 {% block title %} Orders {% endblock %}
 {% block body %}
-  <h2>Orders</h2>
+<div class="container py-4">
+  <div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">
+    <div class="table-responsive py-1">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if orders %}
+                {% for order in orders %}
+                <tr>
+                    <td>{{order.id}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button data-id="{{order.id}}" type="button" class="btn details_btn" data-bs-toggle="modal" data-bs-target="#show_details_modal" id="details">Details</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p>There are no available orders.</p>
+                {% endif %}
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<!-- Detail modal-->
+<div class="modal fade" id="show_details_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 450px;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Products</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div id="details_container">
+              </div>
+              <div class="modal-footer d-flex justify-content-between">
+                      <button type="button" class="btn btn-danger" id="close_details" data-bs-dismiss="modal">Close</button>
+              </div>
+              
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<script src="../static/js/show_order_details.js"></script>
 
-  {% if user.is_authenticated %}
-    <p>Showing your orders, {{ user.name }}:</p>
-  {% else %}
-    <p>Showing available orders.</p>
-  {% endif %}
-
-  {% if orders %}
-    <ul>
-      {% for order in orders %}
-        <li>Orden ID: {{ order.id }} - Total: ${{ order.total_price }} - Payment Method: {{ order.payment_method }}</li>
-        <ul>
-          {% for product in order.products.all %}
-          <p>Name: {{product.name}} - Price: {{product.price}} - Quantity: {{product.quantity}}</p>
-          {% endfor %}
-        </ul>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>There are no available orders.</p>
-  {% endif %}
 {% endblock %}

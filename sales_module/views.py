@@ -133,15 +133,31 @@ def show_orders(request):
         orders = Order.objects.filter(customer=user)
         return  render(request, 'show_orders.html', {'orders':orders})
     else:
-        p = Published_Product.objects.filter(publish_quantity=0);
-        for x in p.all():
-            x.delete()
         orders = Order.objects.filter(customer__isnull=True)
-        for order in list(orders):
-            print(f'PRODUCTOS DE LA ORDEN: {order.id}')
-            for product in order.products.all():
-                print(f'{product.name}')
         return  render(request, 'show_orders.html', {'orders':orders})
+    
+def show_order_detail(request):
+    if request.method=='POST':
+        data = json.loads(request.body)
+        order_id=data['order_id']
+        order = Order.objects.get(id=order_id)
+        products = order.products.all()
+        products_data = []
+        for product in products:
+            image = product.image.url
+            image = image.replace('/media/','')
+            products_data.append({
+                'id': product.id,
+                'image':product.image.url,
+                'name': product.name,
+                'price': product.price,
+                'quantity': product.quantity
+            })
+            print(image)
+
+        return JsonResponse({'products': products_data})
+    return JsonResponse({'error':'Unexpected method type'})
+
 
 
 
