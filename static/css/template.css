@@ -11,12 +11,12 @@
 
 }
 
-.navbar-nav .nav-link {
+.nav-link-custom {
 
     position: relative;
 }
 
-.navbar-nav .nav-link::after {
+.nav-link-custom::after {
     content: '';
     position: absolute;
     width: 0;
@@ -27,12 +27,24 @@
     transition: width 0.3s ease, left 0.3s ease; 
 }
 
-.navbar-nav .nav-link:hover::after {
+.nav-link-custom:hover::after {
     width: 100%; 
     left: 0; 
 }
 
-.navbar-nav .nav-link:hover {
+.nav-link-custom:hover {
     color: #F9AA41; 
-    transition: color 0.3s ease; /* Transición suave para el color del texto */
+    transition: color 0.3s ease; 
+}
+
+.customize_btn{
+    background-color: #0E272C;
+    color:white;
+
+}
+.customize_btn:hover{
+    background-color: #4EBC95;
+    color:white;
+    transition: background-color 0.3s ease; 
+
 }
