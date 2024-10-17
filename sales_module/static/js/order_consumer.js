@@ -8,8 +8,9 @@ generate_order.addEventListener('click', function() {
     let total_price=0;
     let product_total_price;
     order_container.innerHTML="";
-    if (products) {
+    if (products.some(product => product.type === "sale")) {
         products.forEach(product => {
+            if(product.type=='sale'){
             product_total_price=product.quantity*product.price
             total_price += product_total_price;
 
@@ -29,6 +30,7 @@ generate_order.addEventListener('click', function() {
             `;
 
             order_container.innerHTML += product_order_HTML;
+            }
         });
         total_price_container.innerText = `US$ ${total_price}`;
         total_price_container.value=total_price;

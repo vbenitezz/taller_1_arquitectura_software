@@ -9,30 +9,32 @@ generate_order.addEventListener('click', function() {
     let product_total_price
     console.log(products);
     order_container.innerHTML="";
-    if (products) {
+    if (products.some(product => product.type === "donation")) {
         products.forEach(product => {
-            product_total_price=product.quantity*product.price
-            total_price += product_total_price;
+            if(product.type=='donation'){
+                product_total_price=product.quantity*product.price
+                total_price += product_total_price;
 
-            const product_order_HTML = `
-            <div class="d-flex justify-content-between align-items-center border p-2 mb-2 product_container">
-                <div class="d-flex align-items-center">
-                    <div class="img_container bg-secondary d-flex justify-content-center align-items-center">
-                        <img src="${product.image}" alt="${product.name}" class="img-fluid product_image" width="50" height="50">
+                const product_order_HTML = `
+                <div class="d-flex justify-content-between align-items-center border p-2 mb-2 product_container">
+                    <div class="d-flex align-items-center">
+                        <div class="img_container bg-secondary d-flex justify-content-center align-items-center">
+                            <img src="${product.image}" alt="${product.name}" class="img-fluid product_image" width="50" height="50">
+                        </div>
+                        <div class="product_info ms-2">
+                            <h6 class="m-0">${product.name}</h6>
+                            <small class="text-muted">$${product.price} per unit</small>
+                        </div>
                     </div>
-                    <div class="product_info ms-2">
-                        <h6 class="m-0">${product.name}</h6>
-                        <small class="text-muted">$${product.price} per unit</small>
-                    </div>
+                    <p class="m-0 me-4 fw_bold">x${product.quantity}</p>
                 </div>
-                <p class="m-0 me-4 fw_bold">x${product.quantity}</p>
-            </div>
-            `;
+                `;
 
-            order_container.innerHTML += product_order_HTML;
-        });
-        total_price_container.innerText = `US$ ${total_price}`;
-        total_price_container.value=total_price;
+                order_container.innerHTML += product_order_HTML;
+            }
+            });
+            total_price_container.innerText = `US$ ${total_price}`;
+            total_price_container.value=total_price;
         
     } else {
         order_container.innerHTML = `<div class="alert alert-warning" role="alert">There are no products in the shopping cart</div>`
