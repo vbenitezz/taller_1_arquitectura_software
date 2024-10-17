@@ -40,18 +40,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Agregar cada tarjeta al cuerpo del modal
                     modalBody.appendChild(div_product);
 
-                    // Añadir evento para eliminar el producto
+                    // Agregar evento de eliminar
                     const deleteButton = document.getElementById(`delete_product_${index}`);
                     deleteButton.addEventListener('click', function() {
-                        // Eliminar el producto del array del carrito
-                        shopping_cart.splice(index, 1);
-                        
-                        // Guardar los cambios en el localStorage
+                        const delete_product = shopping_cart.splice(index, 1)[0];
+                        update_publish_quantity(delete_product);
+
                         localStorage.setItem('add_cart_product', JSON.stringify(shopping_cart));
-                        
-                        // Volver a renderizar los productos sin cerrar el modal
                         renderCart();
                     });
+
+                    // Función para actualizar la publish_quantity del producto correspondiente
+                    function update_publish_quantity(delete_product){
+                        const id_product = delete_product.id;
+                        // Selecciona el producto en el DOM por su data-id_cart_product
+                        const productElement = document.querySelector(`[data-id_cart_product="${id_product}"]`);
+    
+                        if(productElement){
+                            // Busca el elemento con id="new_quantity_<id_product>" y actualiza su contenido
+                            const quantityElement = productElement.closest('.card').querySelector(`#new_quantity_${id_product} strong`);
+                            const current_quantity = parseInt(quantityElement.nextSibling.nodeValue.trim());
+                            const new_quantity = current_quantity + delete_product.quantity;
+
+                            // Actualiza la cantidad en el HTML
+                            quantityElement.nextSibling.nodeValue = ` ${new_quantity}`;
+                        }
+                    }
                 }
             });
         }
