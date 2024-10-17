@@ -144,8 +144,14 @@ def show_order_detail(request):
         products = order.products.all()
         products_data = []
         for product in products:
-            image = product.image.url
-            image = image.replace('/media/','')
+            print("URL: ",product.image.url)
+            img = product.image.url
+            img =  img.replace('http://127.0.0.1:8000/','')
+            img =  img.replace('/media/','')
+            img = '/media/'+ img
+            print("TRANSFORMADA: ",img)
+
+
             products_data.append({
                 'id': product.id,
                 'image':product.image.url,
@@ -153,7 +159,7 @@ def show_order_detail(request):
                 'price': product.price,
                 'quantity': product.quantity
             })
-            print(image)
+
 
         return JsonResponse({'products': products_data})
     return JsonResponse({'error':'Unexpected method type'})
