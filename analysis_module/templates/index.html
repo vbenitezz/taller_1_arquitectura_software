@@ -36,11 +36,21 @@
         </div>
         <div class="card mt-4">
             <div class="card-header">
-                Bar Chart: Inventory
+                Bar Chart: products created
             </div>
             <div class="card-body">
                 <div class="{% plotly_class name='BarChart' %} card" style="height: 100%; width: 100%;">
-                    {% plotly_app name='BarChart' ratio=0.9 %}
+                    {% plotly_app name='BarChart' ratio=0.5 %}
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-header">
+                Bar Chart: inventory
+            </div>
+            <div class="card-body">
+                <div class="{% plotly_class name='BarChart1' %} card" style="height: 100%; width: 100%;">
+                    {% plotly_app name='BarChart1' ratio=0.5 %}
                 </div>
             </div>
         </div>
