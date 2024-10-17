@@ -4,6 +4,12 @@ from sales_module.models import Published_Product, Order
 from inventory_module.models import Product_Inventory
 import plotly.graph_objs as go
 
+print('//////////////////////////////////')
+orders = Order.objects.filter(customer__isnull=True)
+for order in orders:
+    for product in order.products.all():
+        print(f'{product.id} -> {product.name} : {product.quantity}')
+
 # Variables predefinidas para las opciones seleccionadas
 variables = {
     'products_sold': 0,
@@ -41,30 +47,47 @@ def customize_chart(request):
 
             data = []
             if '1' in selected_variables:
-                data.append(('Products Sold', Order.objects.filter(customer_id=None).count()))
+                acc = 0
+                orders = Order.objects.filter(customer_id=None)
+                for order in orders:
+                    for product in order.products.all():
+                        acc += product.quantity
+                        print(f'{product.id} -> {product.name} : {product.quantity}')
+                data.append(('Products Sold', acc))
             if '2' in selected_variables:
-                data.append(('Products Donated', Order.objects.exclude(customer_id=None).count()))
+                acc = 0
+                orders = Order.objects.exclude(customer_id=None)
+                for order in orders:
+                    for product in order.products.all():
+                        acc += product.quantity
+                        print(f'{product.id} -> {product.name} : {product.quantity}')
+                data.append(('Products Donated', acc))
             if '3' in selected_variables:
-                data.append(('Products in Inventory', Product_Inventory.objects.count()))
+                data.append(('Products in Inventory', sum([product.total_quantity for product in Product_Inventory.objects.all()])))
             if '4' in selected_variables:
-                data.append(('Products Published', Published_Product.objects.count()))
+                data.append(('Products Published', sum([product.publish_quantity for product in Published_Product.objects.all()])))
             if '5' in selected_variables:
-                data.append(('Products Published for Sale', Published_Product.objects.filter(publish_type='sale').count()))
+                data.append(('Products Published for Sale', sum([product.publish_quantity for product in Published_Product.objects.filter(publish_type='sale')])))
             if '6' in selected_variables:
-                data.append(('Products Published for Donation', Published_Product.objects.filter(publish_type='donation').count()))
+                data.append(('Products Published for Donation', sum([product.publish_quantity for product in Published_Product.objects.filter(publish_type='donation')])))
+
+            # Colores definidos
+            colors = ['#3C93AF', '#F9AA41', '#4EBC95', '#325F74', '#0E272C', '#FFFFFF']
 
             if chart_type == '1':  # Pie chart
                 labels = [item[0] for item in data]
                 values = [item[1] for item in data]
                 chart = go.Figure(
-                    data=[go.Pie(labels=labels, values=values)],
+                    data=[go.Pie(labels=labels, values=values, 
+                                  marker=dict(colors=colors[:len(labels)]))],  # Colores según la cantidad de etiquetas
                     layout=go.Layout(title='Pie Chart: Selected Variables')
                 )
             elif chart_type == '2':  # Bar chart
                 labels = [item[0] for item in data]
                 values = [item[1] for item in data]
                 chart = go.Figure(
-                    data=[go.Bar(x=labels, y=values)],
+                    data=[go.Bar(x=labels, y=values, 
+                                  marker=dict(color=colors[:len(labels)]))],  # Colores según la cantidad de etiquetas
                     layout=go.Layout(title='Bar Chart: Selected Variables', xaxis={'title': 'Categories'}, yaxis={'title': 'Count'})
                 )
 

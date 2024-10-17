@@ -13,6 +13,11 @@ app.layout = html.Div([
     dcc.Graph(id='pie-chart', animate=True, style={"backgroundColor": "#FFFFFF", 'color': '#FFFFFF'}),
     dcc.Slider(
         id='slider-pie',
+        min=1,  # Mostrar al menos una categoría
+        max=2,  # Solo hay 2 categorías: 'Sale' y 'Donation'
+        step=1,
+        value=2,  # Valor inicial que muestra ambas categorías
+        marks={1: '1', 2: '2'},  # Etiquetas del slider
         updatemode='drag',
     ),
 ])
@@ -22,20 +27,21 @@ app.layout = html.Div([
     [Input('slider-pie', 'value')]
 )
 def update_pie_chart(value):
-    products_for_donation = Published_Product.objects.filter(publish_type='donation').count()
-    products_for_sale = Published_Product.objects.filter(publish_type='sale').count()
+    products_for_donation = sum([product.publish_quantity for product in Published_Product.objects.filter(publish_type='donation')])
+    products_for_sale = sum([product.publish_quantity for product in Published_Product.objects.filter(publish_type='sale')])
     
     labels = ['Sale', 'Donation']
-    values = [products_for_sale,products_for_donation]
+    values = [products_for_sale, products_for_donation]
 
-    # Limitar los datos según el valor del slider
+    # Limitar los datos según el valor del slider (muestra 'value' número de categorías)
     labels = labels[:value]
     values = values[:value]
 
     pie_chart = go.Pie(
         labels=labels,
         values=values,
-        hole=0,  # Para agregar un pequeño agujero en el centro si quieres un gráfico de dona
+        hole=0.1,  # Añadir un agujero para gráfico de dona
+        marker=dict(colors=['#3C93AF', '#F9AA41']),  # Azul para venta y amarillo/naranja para donación
     )
 
     layout = go.Layout(
@@ -44,4 +50,3 @@ def update_pie_chart(value):
     )
 
     return {'data': [pie_chart], 'layout': layout}
-
