@@ -54,7 +54,9 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Price: </strong>{{product.publish_price}}$</li>
-                            <li class="list-group-item"><strong>Quantity: </strong>{{product.publish_quantity}}</li>
+                            <li class="list-group-item" id="new_quantity_{{product.id}}"><strong>Quantity: </strong>{{product.publish_quantity}}</li>
+
+                            <!-- <li class="list-group-item" id="new_quantity"><strong>Quantity: </strong>{{product.publish_quantity}}</li> -->
                             <li class="list-group-item"><strong>Category: </strong>{{product.category_product}} </li>
                             <li class="list-group-item"><strong>Description: </strong>{{product.description_product}}</li>
                             <li class="list-group-item"><strong>Pick up time: </strong>{{product.pick_up_time}}</li>
@@ -115,7 +117,7 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn add_cart_btn" id="add_to_cart_consumer" data-bs-dismiss="modal">Add to cart</button>
                             <!-- <button type="submit" class="btn btn-primary" id="go_shopping_cart_consumer">Go to cart</button> -->
-                            <button data-id_cart_product="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shopping_cart_consumer_modal">Go to cart</button>
+                            
                         </div>
                     </form>
                 </div>
