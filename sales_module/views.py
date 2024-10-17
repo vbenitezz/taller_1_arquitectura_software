@@ -114,7 +114,7 @@ def buy_order_foundation(request):
             print(published_product.publish_quantity)
 
             Cart_Product.objects.create(
-                image=product.image,
+                image=product['image'],
                 name=published_product.name_product,
                 price=published_product.publish_price,
                 order=order,
