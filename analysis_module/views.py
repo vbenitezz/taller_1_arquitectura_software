@@ -55,13 +55,13 @@ def customize_chart(request):
                         print(f'{product.id} -> {product.name} : {product.quantity}')
                 data.append(('Products Sold', acc))
             if '2' in selected_variables:
-                acc = 0
+                acc_ = 0
                 orders = Order.objects.exclude(customer_id=None)
                 for order in orders:
                     for product in order.products.all():
-                        acc += product.quantity
+                        acc_ += product.quantity
                         print(f'{product.id} -> {product.name} : {product.quantity}')
-                data.append(('Products Donated', acc))
+                data.append(('Products Donated', acc_))
             if '3' in selected_variables:
                 data.append(('Products in Inventory', sum([product.total_quantity for product in Product_Inventory.objects.all()])))
             if '4' in selected_variables:

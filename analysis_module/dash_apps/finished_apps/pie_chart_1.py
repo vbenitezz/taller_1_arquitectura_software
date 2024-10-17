@@ -36,10 +36,10 @@ def update_pie_chart(value):
     for order in orders:
         for product in order.products.all():
             if order.customer_id is None:  # Ordenes sin cliente son donaciones
-                donate += product.quantity
-            else:  # Ordenes con cliente son ventas
                 sold += product.quantity
-
+            else:  # Ordenes con cliente son ventas
+                donate += product.quantity
+                
     # Definir etiquetas y valores
     labels = ['Products sold', 'Products donated']
     values = [sold, donate]
