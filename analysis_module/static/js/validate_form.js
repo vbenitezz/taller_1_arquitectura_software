@@ -1,4 +1,4 @@
-console.log("HOLAAA")
+
 document.getElementById('chartForm').addEventListener('submit', function(event) {
     // Obtiene el valor seleccionado del select
     const chartType = document.getElementById('input_category').value;
@@ -17,6 +17,11 @@ document.getElementById('chartForm').addEventListener('submit', function(event) 
     // Validación: Si el tipo de gráfico es "0" o menos de dos checkboxes marcadas, muestra alerta y detiene envío
     if (chartType === "0" || checkedCount < 2) {
         event.preventDefault(); // Evita que el formulario se envíe
-        alert('Please select a chart type and at least two variables.');
+        Swal.fire({
+            icon: 'warning',      
+            title: 'Missing information',
+            text:'Please select a chart type and at least two variables.',
+            confirmButtonText: 'OK'
+        })
     }
 });

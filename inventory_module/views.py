@@ -64,7 +64,6 @@ def get_product_add_product(request, id):
         'name': product_inventory.name_product,
         'quantity': product_inventory.total_quantity
     }
-    print(data)
     return JsonResponse(data)
 
 def edit_product_add_product(request, id):
@@ -132,7 +131,7 @@ def publish_product(request):
         publish_product_type = request.POST['type']
         published_quantity = int(request.POST['quantity'])
         publish_product_pick_up_time = request.POST['pick_up_time']
-        publish_product_price = request.POST['price']
+        publish_product_price = request.POST.get('price',0)
 
         # Filtrar productos con el mismo ID
         products_with_same_id = Published_Product.objects.filter(id_product_inventory__id_product__id=id_product)
@@ -142,7 +141,6 @@ def publish_product(request):
             product_with_same_type = products_with_same_id.filter(publish_type=publish_product_type).first()
 
             if product_with_same_type:
-                # Si existe un producto con el mismo ID y tipo, mostrar un mensaje de error
                 messages.error(request, 'The product you are trying to publish is already published. If you want to modify it, click here.')
             else:
                 # Si no existe un producto con el mismo ID y tipo, crear uno nuevo

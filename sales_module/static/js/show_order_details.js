@@ -19,12 +19,11 @@ modal.addEventListener('show.bs.modal', function(event) {
                 if (data.products) { 
                     const products = data.products;
                     products.forEach(product => {
-                        console.log('IMG URL: ',product.image);
-                        let image_url = product.image.includes('media/') ? product.image : `/media/${product.image}`;
                         const product_HTML = `
                             <div class="d-flex justify-content-between align-items-center border p-2 mb-2 product_container">
                                 <div class="d-flex align-items-center">
                                     <div class="img_container bg-secondary d-flex justify-content-center align-items-center">
+                                        <img src="${product.image}" alt="${product.name}" class="img-fluid product_image" width="50" height="50">
                                     </div>
                                     <div class="product_info ms-2">
                                         <h6 class="m-0">${product.name}</h6>

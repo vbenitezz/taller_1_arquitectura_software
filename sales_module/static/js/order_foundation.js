@@ -49,44 +49,67 @@ generate_order.addEventListener('click', function() {
 // When the customer buy the order
 const buy_order = document.getElementById('buy_order');
 buy_order.addEventListener('click', function() {
-    let products = JSON.parse(localStorage.getItem('add_cart_product'));
-
+    let products = JSON.parse(localStorage.getItem('add_cart_product')).filter(product => product.type === 'donation');
     if (!products || products.length === 0) {
-        alert("There are no products in the shopping cart");
+        Swal.fire({
+            icon: 'warning',
+            title: 'No products to purchase',
+            text: 'There are no sale products in your shopping cart.',
+            confirmButtonText: 'OK'
+        });
         return; 
     } else {
-        let confirmation = window.confirm("Are you sure you want to confirm get these products?");
-
-        if (confirmation){
-            let total_price = products.reduce((sum, product) => sum + product.price * product.quantity, 0);
-            let order_data = {
-                products: JSON.stringify(products) , 
-                total_price: total_price
-            };
-            fetch('/buy_order_foundation/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',  
-                },
-                body: JSON.stringify(order_data)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert('Successful purchase');
-                localStorage.removeItem('add_cart_product');
-                const modal = document.getElementById('order_modal');
-                const modal_instance = bootstrap.Modal.getInstance(modal);
-                modal_instance.hide();
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error('Error sending the order', error);
-            });
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to confirm your purchase?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, confirm it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let total_price = products.reduce((sum, product) => sum + product.price * product.quantity, 0);
+                let order_data = {
+                    products: JSON.stringify(products) , 
+                    total_price: total_price
+                };
+                fetch('/buy_order_foundation/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',  
+                    },
+                    body: JSON.stringify(order_data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    Swal.fire({
+                        icon: 'success',      
+                        title: 'Purchase Successful!',
+                        text: 'Your products have been successfully purchased.',
+                        confirmButtonText: 'OK'
+                    });
+                    let remaining_products = products.filter(product => product.type !== 'donation');
+                    localStorage.setItem('add_cart_product',JSON.stringify(remaining_products));
+                    const modal = document.getElementById('order_modal');
+                    const modal_instance = bootstrap.Modal.getInstance(modal);
+                    modal_instance.hide();
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error sending the order', error);
+                });
+                Swal.fire(
+                    'Confirmed!',
+                    'Your purchase has been confirmed.',
+                    'success'
+                );
+            }
+        });
     }
 });

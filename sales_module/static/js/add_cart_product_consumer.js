@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const cart_product_consumer_modal = document.getElementById('cart_product_consumer_modal');
-    
+    let image;
     cart_product_consumer_modal.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget;
         const id = button.getAttribute('data-id_cart_product');
@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/get_product_cart_product_consumer/${id}/`)
             .then(response => response.json())
             .then(data => {
-                
+                image = data.image
                 document.getElementById('name_cart_product_consumer').value = data.name;
-                document.getElementById('image_cart_product_consumer').src = data.image; 
+                document.getElementById('image_cart_product_consumer').src = image; 
                 document.getElementById('price_cart_product_consumer').innerText = `US$${data.price}`;
                 document.getElementById('publish_quantity_cart_product_consumer').value = data.publish_quantity;
                 update_subtotal_cart_product_consumer();
@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const quantity_cart_product = document.getElementById('quantity_cart_product_consumer');
     const subtotal_cart_product_consumer = document.getElementById('subtotal_cart_product_consumer');
     const name_cart_product = document.getElementById('name_cart_product_consumer');
-    const image_cart_product = document.getElementById('image_cart_product_consumer');
     const type_cart_product = document.getElementById('type_cart_product');
 
     const publish_quantity_cart_product = document.getElementById('publish_quantity_cart_product_consumer');
@@ -31,22 +30,24 @@ document.addEventListener('DOMContentLoaded', function() {
     cart_product_consumer_form.addEventListener('submit', function(event) {
         quantity = parseInt(quantity_cart_product.value);
         id = parseInt(id_product_cart.value);
-        publish_quantity = parseInt(publish_quantity_cart_product.value);  
-        img = document.getElementById('image_cart_product_consumer').src;
+        publish_quantity = parseInt(publish_quantity_cart_product.value); 
         if (quantity > publish_quantity) {
             event.preventDefault();
-            alert(`The amount is not valid`);
+            Swal.fire({
+                icon: 'warning',      
+                title: 'The amount is not valid',
+                confirmButtonText: 'OK'
+            })
         }else{
             event.preventDefault();
             new_quantity = publish_quantity-quantity;
             update_published_quantity(id, new_quantity);
             const cart_product = {
                 id:id,
-                img:img,
                 price: parseInt(price_cart_product.innerText.replace('US$', '').trim()),
                 quantity: parseInt(quantity_cart_product.value),
                 name: name_cart_product.value,
-                image: image_cart_product.src,
+                image: image,
                 type: type_cart_product.value
             };
             
@@ -111,12 +112,21 @@ function update_published_quantity(id,new_quantity){
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            alert('Product added to cart successfully');
-            setTimeout(function() {
-                location.reload();
-            }, 100);
+            Swal.fire({
+                icon: 'success',      
+                title: 'Product added to cart successfully',
+                confirmButtonText: 'OK'
+            }).then((result)=>{
+                setTimeout(function() {
+                    location.reload();
+                }, 100);
+            })
         } else {
-            alert('Error: ' + data.message);
+            Swal.fire({
+                icon: 'error',      
+                title: data.message,
+                confirmButtonText: 'OK'
+            })
         }
     })
     .catch(error => console.error('Error:', error));

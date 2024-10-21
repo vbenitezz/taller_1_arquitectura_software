@@ -8,6 +8,8 @@
             <thead>
                 <tr>
                     <th>Order ID</th>
+                    <th>Order date</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -15,6 +17,8 @@
                 {% for order in orders %}
                 <tr>
                     <td>{{order.id}}</td>
+                    <td>{{order.order_date}}</td>
+
                     <td>
                         <div class="btn-group">
                             <button data-id="{{order.id}}" type="button" class="btn details_btn" data-bs-toggle="modal" data-bs-target="#show_details_modal" id="details">Details</button>

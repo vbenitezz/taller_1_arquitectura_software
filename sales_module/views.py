@@ -25,10 +25,6 @@ def view_products_for_donate(request):
 
 def get_product_cart_product_consumer(request, id):
     product = Published_Product.objects.get(id=id)
-    print(product.publish_price)
-    print(product.image_product())
-    print(product.name_product)
-    print(product.publish_quantity)
     data = {
         'name': product.name_product,
         'image': product.image_product(),
@@ -80,17 +76,18 @@ def buy_order_consumer(request):
         )
         for product in products:
             published_product = Published_Product.objects.get(id=int(product['id']))
+            image_path = product['image'].replace('/media/', '')
             Cart_Product.objects.create(
-                image=product['img'],
+                image=image_path,
                 name=published_product.name_product,
                 price=published_product.publish_price,
                 order=order,
                 quantity=int(product['quantity'])
                 )
             if(published_product.publish_quantity==0):
-                print("ENTROOOO")
+
                 published_product.delete()
-        return JsonResponse({'status': 'success', 'message': 'Quantity updated successfully'})
+        return JsonResponse({'status': 'success', 'message': 'Products bought successfully'})
     
 
 @login_required
@@ -108,27 +105,21 @@ def buy_order_foundation(request):
         )
         for product in products:
             published_product = Published_Product.objects.get(id=int(product['id']))
-            print("PRODUCTO: ")
-            print(published_product.name_product)
-            print("CANTIDAD: ")
-            print(published_product.publish_quantity)
-
+            image_path = product['image'].replace('/media/', '')
             Cart_Product.objects.create(
-                image=product['image'],
+                image=image_path,
                 name=published_product.name_product,
                 price=published_product.publish_price,
                 order=order,
                 quantity=int(product['quantity'])
                 )
             if(published_product.publish_quantity==0):
-                print("ENTROOOO")
                 published_product.delete()
             
-        return JsonResponse({'status': 'success', 'message': 'Quantity updated successfully'})
+        return JsonResponse({'status': 'success', 'message': 'Products bought successfully'})
     
 def show_orders(request):
     if request.user.is_authenticated:
-        print('AUTENTICADO')
         user=Foundation.objects.get(email=request.user.email)
         orders = Order.objects.filter(customer=user)
         return  render(request, 'show_orders.html', {'orders':orders})
@@ -144,14 +135,6 @@ def show_order_detail(request):
         products = order.products.all()
         products_data = []
         for product in products:
-            print("URL: ",product.image.url)
-            img = product.image.url
-            img =  img.replace('http://127.0.0.1:8000/','')
-            img =  img.replace('/media/','')
-            img = '/media/'+ img
-            print("TRANSFORMADA: ",img)
-
-
             products_data.append({
                 'id': product.id,
                 'image':product.image.url,
