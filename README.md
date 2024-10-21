@@ -1,4 +1,4 @@
-# PantryPal
+# PlateCare
 ## 1. Clone the repository:
 * Create a folder on your computer.
 * Open the folder in Visual Studio Code.
