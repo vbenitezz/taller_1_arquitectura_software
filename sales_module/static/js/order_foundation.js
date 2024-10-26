@@ -9,7 +9,7 @@ generate_order.addEventListener('click', function() {
     let product_total_price
     console.log(products);
     order_container.innerHTML="";
-    if (products.some(product => product.type === "donation")) {
+    if (products.some(product => product.type && product.type.trim().toLowerCase() === 'donation')) {
         products.forEach(product => {
             if(product.type=='donation'){
                 product_total_price=product.quantity*product.price
@@ -94,8 +94,12 @@ buy_order.addEventListener('click', function() {
                         text: 'Your products have been successfully purchased.',
                         confirmButtonText: 'OK'
                     });
-                    let remaining_products = products.filter(product => product.type !== 'donation');
-                    localStorage.setItem('add_cart_product',JSON.stringify(remaining_products));
+                    let all_products = JSON.parse(localStorage.getItem('add_cart_product')) || [];
+                    let remaining_products = all_products.filter(product => product.type && product.type.trim().toLowerCase() !== 'donation');
+
+                    localStorage.setItem('add_cart_product', JSON.stringify(remaining_products));
+                    console.log("Productos restantes después del filtrado:", remaining_products);
+                    
                     const modal = document.getElementById('order_modal');
                     const modal_instance = bootstrap.Modal.getInstance(modal);
                     modal_instance.hide();

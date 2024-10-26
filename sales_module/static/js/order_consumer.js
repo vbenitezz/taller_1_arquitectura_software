@@ -8,7 +8,7 @@ generate_order.addEventListener('click', function() {
     let total_price=0;
     let product_total_price;
     order_container.innerHTML="";
-    if (products.some(product => product.type === "sale")) {
+    if (products.some(product => product.type && product.type.trim().toLowerCase() === 'sale')) {
         products.forEach(product => {
             if(product.type=='sale'){
             product_total_price=product.quantity*product.price
@@ -95,8 +95,11 @@ buy_order.addEventListener('click', function() {
                     confirmButtonText: 'OK'
                 })
                 .then((result) => {
-                    let remaining_products = products.filter(product => product.type !== 'sale');
-                    localStorage.setItem('add_cart_product',JSON.stringify(remaining_products));
+                    let all_products = JSON.parse(localStorage.getItem('add_cart_product')) || [];
+                    let remaining_products = all_products.filter(product => product.type && product.type.trim().toLowerCase() !== 'sale');
+
+                    localStorage.setItem('add_cart_product', JSON.stringify(remaining_products));
+                    console.log("Productos restantes después del filtrado:", remaining_products);
                     const modal = document.getElementById('order_modal');
                     const modal_instance = bootstrap.Modal.getInstance(modal);
                     modal_instance.hide();
