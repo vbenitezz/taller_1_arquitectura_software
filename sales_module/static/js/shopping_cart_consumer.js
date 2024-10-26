@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const deleteButton = document.getElementById(`delete_product_${index}`);
                     deleteButton.addEventListener('click', function() {
                         const delete_product = shopping_cart.splice(index, 1)[0];
+                        console.log(delete_product);
                         update_publish_quantity(delete_product);
 
                         localStorage.setItem('add_cart_product', JSON.stringify(shopping_cart));
@@ -53,18 +54,41 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Función para actualizar la publish_quantity del producto correspondiente
                     function update_publish_quantity(delete_product){
                         const id_product = delete_product.id;
+                        const new_quantity = delete_product.quantity;
                         // Selecciona el producto en el DOM por su data-id_cart_product
-                        const productElement = document.querySelector(`[data-id_cart_product="${id_product}"]`);
-    
-                        if(productElement){
-                            // Busca el elemento con id="new_quantity_<id_product>" y actualiza su contenido
-                            const quantityElement = productElement.closest('.card').querySelector(`#new_quantity_${id_product} strong`);
-                            const current_quantity = parseInt(quantityElement.nextSibling.nodeValue.trim());
-                            const new_quantity = current_quantity + delete_product.quantity;
-
-                            // Actualiza la cantidad en el HTML
-                            quantityElement.nextSibling.nodeValue = ` ${new_quantity}`;
-                        }
+                        fetch('/update_product_delete_quantity/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                product_id: id_product,
+                                quantity: new_quantity
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',      
+                                    title: 'Product deleted from cart successfully',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                }).then((result)=>{
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 100);
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',      
+                                    title: data.message,
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                })
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
                     }
                 }
             });

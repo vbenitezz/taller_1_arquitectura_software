@@ -70,7 +70,7 @@
                     </ul>
                     <!-- <button type="button" class="btn btn-dark btn-sm">Add to cart</button> -->
                     <!-- Button trigger modal -->
-                    <button data-id_cart_product="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cart_product_consumer_modal">Add to cart</button>
+                    <button data-id_cart_product="{{product.id}}" type="button" class="btn add_cart_btn" data-bs-toggle="modal" data-bs-target="#cart_product_foundation_modal">Add to cart</button>
                 </div>
             </div> 
             {% endfor %}
@@ -85,7 +85,7 @@
   
 
 <!-- Modal -->
-<div class="modal fade" id="cart_product_consumer_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="cart_product_foundation_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 450px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,42 +93,56 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="cart_product_consumer_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <form id="cart_product_foundation_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <div class="d-flex flex-column align-items-center mb-3">
                         <h5 class="card-title text-center">Subtotal</h5>
-                        <p class="card-text text-center" id="subtotal_cart_product_consumer">US$0</p>
+                        <p class="card-text text-center" id="subtotal_cart_product_foundation">US$0</p>
 
                         <div class="card mt-1" style="width: 18rem;">
-                            <input type="hidden" id="name_cart_product_consumer">
+                            <input type="hidden" id="name_cart_product_foundation">
                             <input type="hidden" id="type_cart_product" value="donation">
-                            <input type="hidden" id="publish_quantity_cart_product_consumer">
+                            <input type="hidden" id="publish_quantity_cart_product_foundation">
                             <input type="hidden" id="id_product_cart">
 
-                            <img src="" class="card-img-top" id="image_cart_product_consumer" alt="">
-                            <h5 class="card-title text-center" id="price_cart_product_consumer"></h5>
+                            <img src="" class="card-img-top" id="image_cart_product_foundation" alt="">
+                            <h5 class="card-title text-center" id="price_cart_product_foundation"></h5>
                         </div>
                     </div>
                     
                     <div class="d-flex justify-content-center">
-                        <input style="width: 18rem;" type="number" class="form-control" id="quantity_cart_product_consumer" name="quantity_cart_product_consumer">
+                        <input style="width: 18rem;" type="number" class="form-control" id="quantity_cart_product_foundation" name="quantity_cart_product_foundation">
                     </div>
                     <br>
                 
                     
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary" id="add_to_cart_consumer" data-bs-dismiss="modal">Add to cart</button>
-                        <button type="submit" class="btn btn-primary" id="go_shopping_cart_foundation">Go to cart</button>
+                        <button type="submit" class="btn add_cart_btn" id="add_to_cart_foundation" data-bs-dismiss="modal">Add to cart</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal -->
+<!-- Shopping cart Modal -->
+<div class="modal fade" id="shopping_cart_foundation_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Shopping Cart</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal_body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn add_cart_btn" data-bs-toggle="modal" data-bs-target="#order_modal" id="generate_order">Generate Order</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<!-- Button which activate de Order Modal-->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#order_modal" id="generate_order">Generate Order</button>
+
 <!-- Order Modal-->
 <div class="modal fade" id="order_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 450px;">

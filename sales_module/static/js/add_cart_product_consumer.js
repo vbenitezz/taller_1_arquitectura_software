@@ -115,7 +115,8 @@ function update_published_quantity(id,new_quantity){
             Swal.fire({
                 icon: 'success',      
                 title: 'Product added to cart successfully',
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 3000
             }).then((result)=>{
                 setTimeout(function() {
                     location.reload();
@@ -125,7 +126,8 @@ function update_published_quantity(id,new_quantity){
             Swal.fire({
                 icon: 'error',      
                 title: data.message,
-                confirmButtonText: 'OK'
+                showConfirmButton: false,
+                timer: 3000
             })
         }
     })

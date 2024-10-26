@@ -63,7 +63,30 @@ def update_product_quantity(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
 
+@csrf_exempt
+def update_product_delete_quantity(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            product_id = data.get('product_id')
+            new_quantity = data.get('quantity')
+            print(f"Received quantity: {new_quantity}")
 
+            product = Published_Product.objects.get(id=product_id)
+            print(f"Current quantity: {product.publish_quantity}")
+            
+            product.publish_quantity += new_quantity
+            product.save()
+            
+            print(f"Updated quantity: {product.publish_quantity}")
+
+            return JsonResponse({'status': 'success', 'message': 'Quantity updated successfully'})
+        except Published_Product.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Product not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
 @csrf_exempt
 def buy_order_consumer(request):
     if request.method == 'POST':
