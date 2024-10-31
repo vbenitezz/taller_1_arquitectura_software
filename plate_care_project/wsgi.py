@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pantry_pal_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'plate_care_project.settings')
 
 application = get_wsgi_application()

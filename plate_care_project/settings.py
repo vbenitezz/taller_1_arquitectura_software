@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware'
 ]
 
-ROOT_URLCONF = 'pantry_pal_project.urls'
+ROOT_URLCONF = 'plate_care_project.urls'
 CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pantry_pal_project.wsgi.application'
+WSGI_APPLICATION = 'plate_care_project.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -89,7 +89,7 @@ USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-ASGI_APPLICATION = 'pantry_pal_project.routing.application'
+ASGI_APPLICATION = 'plate_care_project.routing.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
