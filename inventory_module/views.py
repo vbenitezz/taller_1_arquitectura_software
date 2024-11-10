@@ -29,6 +29,7 @@ def create_product(request):
     categories = ['Fast Food', 'Healthy Options', 'Grilled & BBQ', 'Sides', 'Beverages', 'Desserts']
     product = Product.objects.create(name=name, category=categories[int(category)-1], sale_price=sale_price, description=description, image=image)
     return redirect('inventory')
+
 def delete_product(request, id):
     product = Product.objects.get(id=id).delete()
     return redirect('inventory')
@@ -132,6 +133,8 @@ def publish_product(request):
         published_quantity = int(request.POST['quantity'])
         publish_product_pick_up_time = request.POST['pick_up_time']
         publish_product_price = request.POST.get('price',0)
+        publish_product_pick_up_address = request.user.selected_branch.address
+        publish_product_pick_up_place = request.user.selected_branch.branch
 
         # Filtrar productos con el mismo ID
         products_with_same_id = Published_Product.objects.filter(id_product_inventory__id_product__id=id_product)
@@ -153,7 +156,9 @@ def publish_product(request):
                     publish_type=publish_product_type,
                     publish_quantity=published_quantity,
                     publish_price=publish_product_price,
-                    pick_up_time=publish_product_pick_up_time
+                    pick_up_time=publish_product_pick_up_time,
+                    pick_up_address=publish_product_pick_up_address,
+                    place=publish_product_pick_up_place
                 )
                 messages.success(request, 'Product published successfully')
         else:
@@ -167,7 +172,9 @@ def publish_product(request):
                 publish_type=publish_product_type,
                 publish_quantity=published_quantity,
                 publish_price=publish_product_price,
-                pick_up_time=publish_product_pick_up_time
+                pick_up_time=publish_product_pick_up_time,
+                pick_up_address=publish_product_pick_up_address
+
             )
             messages.success(request, 'Product published successfully')
 

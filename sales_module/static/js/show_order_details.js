@@ -20,18 +20,19 @@ modal.addEventListener('show.bs.modal', function(event) {
                     const products = data.products;
                     products.forEach(product => {
                         const product_HTML = `
-                            <div class="d-flex justify-content-between align-items-center border p-2 mb-2 product_container">
-                                <div class="d-flex align-items-center">
-                                    <div class="img_container bg-secondary d-flex justify-content-center align-items-center">
-                                        <img src="${product.image}" alt="${product.name}" class="img-fluid product_image" width="50" height="50">
-                                    </div>
-                                    <div class="product_info ms-2">
-                                        <h6 class="m-0">${product.name}</h6>
-                                        <small class="text-muted">$${product.price} per unit</small>
-                                    </div>
-                                </div>
-                                <p class="m-0 me-4 fw-bold">x${product.quantity}</p>
+                            <div class="row g-0" style="height: 100px;">
+                            <div class="col-md-4" style="padding: 0; height: 100%;">
+                                <img src="${product.image}" class="img-fluid rounded-start" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                             </div>
+                            <div class="col-md-8 d-flex flex-column justify-content-center" style="height: 100%; position: relative; padding: 0 6px;">
+                                <div class="card-body p-2" style="height: 100%;">
+                                    <h5 class="card-title" style="font-size: 1rem; margin-bottom: 0.1rem;">${product.name}</h5>
+                                    <p class="card-text" style="font-size: 0.8rem; margin-bottom: 0.1rem;">US$${product.price}</p>
+                                    <p class="card-text" style="font-size: 0.8rem; margin-bottom: 0.1rem;"><small class="text-body-secondary">${product.address}</small></p>
+                                    <p class="card-text" style="font-size: 0.8rem;"><small class="text-body-secondary">${product.quantity} unit(s)</small></p>
+                                </div>
+                            </div>
+                        </div>
                         `;
                         details_container.innerHTML += product_HTML;  
                     });

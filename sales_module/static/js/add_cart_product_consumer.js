@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const cart_product_consumer_modal = document.getElementById('cart_product_consumer_modal');
     let image;
+    let place;
+    let address;
     cart_product_consumer_modal.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget;
         const id = button.getAttribute('data-id_cart_product');
@@ -8,7 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/get_product_cart_product_consumer/${id}/`)
             .then(response => response.json())
             .then(data => {
-                image = data.image
+                image = data.image;
+                place = data.place;
+                address=data.address;
                 document.getElementById('name_cart_product_consumer').value = data.name;
                 document.getElementById('image_cart_product_consumer').src = image; 
                 document.getElementById('price_cart_product_consumer').innerText = `US$${data.price}`;
@@ -48,9 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 quantity: parseInt(quantity_cart_product.value),
                 name: name_cart_product.value,
                 image: image,
-                type: type_cart_product.value
+                type: type_cart_product.value,
+                place:place,
+                address: address
             };
-            
             let add_cart_product = JSON.parse(localStorage.getItem('add_cart_product')) || [];
 
             // Buscar el índice del producto en el carrito

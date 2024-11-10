@@ -1,0 +1,58 @@
+{% extends 'template_access_module.html' %}
+{% block title %} Select a branch {% endblock %}
+{% block body %}
+<h2>Select Branch</h2>
+<form method="post" action="{% url 'select_branch' %}">
+    {% csrf_token %}
+    <div class="row">
+        {% if branches %}
+            {% for branch in branches %}
+                <button type="submit" name="branch_id" value="{{ branch.id }}" class="branch-card-button col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card border border-info-subtle card-custom">
+                        <img src="{{ branch.image.url }}" class="card-img-top" alt="{{ branch.branch }} image">
+                        <div class="card-body card-body-custom">
+                            <h5 class="card-title">{{ branch.branch }}</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Address: </strong>{{ branch.address }}</li>
+                        </ul>
+                    </div>
+                </button>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                No branches yet.
+            </div>
+        {% endif %}
+    </div>
+</form>
+<button type="button" class="btn btn-primary mt-4" id="create_branch_btn" data-bs-toggle="modal"
+data-bs-target="#create_branch_modal">Create branch</button>
+
+<div class="modal fade" id="create_branch_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create a branch</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="create_branch_form" method="POST" action="{% url 'create_branch' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="branch_name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="branch_name" name="branch_name" required>
+                    <label for="branch_address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="branch_address" name="branch_address" required>
+                    <label for="branch_image" class="form-label">Image</label>
+                    <input type="file" class="form-control" id="branch_image" name="branch_image" aria-label="file example" required>
+
+                    <div class="mb-3 d-grid gap-2 mt-4">
+                        <button class="btn btn-primary" type="submit">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

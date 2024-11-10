@@ -53,6 +53,9 @@ class Published_Product(models.Model):
     publish_quantity = models.PositiveIntegerField()
     publish_price = models.PositiveIntegerField()
     pick_up_time = models.TimeField()
+    pick_up_address = models.CharField(max_length=200,null=True)
+    place = models.CharField(max_length=200,null=True)
+    
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)

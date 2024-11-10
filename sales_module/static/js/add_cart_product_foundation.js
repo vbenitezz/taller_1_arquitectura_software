@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 image = data.image;
+                place = data.place;
+                address=data.address;
                 document.getElementById('name_cart_product_foundation').value = data.name;
                 document.getElementById('image_cart_product_foundation').src = image; 
                 document.getElementById('price_cart_product_foundation').innerText = `US$${data.price}`;
@@ -49,7 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 quantity: parseInt(quantity_cart_product.value),
                 name: name_cart_product.value,
                 image: image,
-                type: type_cart_product.value
+                type: type_cart_product.value,
+                place:place,
+                address: address
             };
             let add_cart_product = JSON.parse(localStorage.getItem('add_cart_product')) || [];
 

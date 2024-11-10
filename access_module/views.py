@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate,login
 from .forms import Custom_User_Creation_Form,Custom_Login_Form
 from django.contrib import messages
 from .models import Restaurant_Chain, Foundation
+from django.shortcuts import get_object_or_404
+from .models import Restaurant_Chain_Branch
 
 def sign_up(request):
     user_type = request.GET.get('user_type') if request.method == 'GET' else request.POST.get('user_type')
@@ -33,7 +35,7 @@ def sign_up(request):
             user = authenticate(username=cleaned_data['email'], password=cleaned_data['password1'])
             if user is not None:
                 login(request,user)
-                return redirect('inventory' if user_type == 'restaurant chain' else 'view_products_for_donate')
+                return redirect('select_branch' if user_type == 'restaurant chain' else 'view_products_for_donate')
             else:
                 messages.error(request, 'Authentication failed. Please check your credentials.')
         else:
@@ -58,7 +60,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome, {user.name}!')
-                return redirect('inventory' if hasattr(user, 'restaurant_chain') else 'view_products_for_donate')
+                return redirect('select_branch' if hasattr(user, 'restaurant_chain') else 'view_products_for_donate')
             else:
                 messages.error(request, 'Invalid email or password.')
         else:
@@ -70,6 +72,44 @@ def login_view(request):
         login_form = Custom_Login_Form()
 
     return render(request, 'login.html', {'login_form': login_form})
+
+def select_view(request):
+    if not request.user.is_authenticated:
+        return redirect('login')  # Asegura que el usuario esté autenticado
+
+    branches = Restaurant_Chain_Branch.objects.filter(id_restaurant_chain=request.user)
+    if request.method == 'POST':
+        branch_id = request.POST.get('branch_id')
+        branch = get_object_or_404(Restaurant_Chain_Branch, id=branch_id, id_restaurant_chain=request.user)
+        request.user.selected_branch = branch
+        request.user.save()
+        return redirect('inventory')
+
+    return render(request, 'select_branch.html', {'branches': branches})
+
+def create_branch(request):
+    if request.method=="POST":
+        user = request.user
+        branches = Restaurant_Chain_Branch.objects.filter(id_restaurant_chain=request.user)
+        restaurant_chain = get_object_or_404(Restaurant_Chain, email=user.email)
+        image = request.FILES['branch_image']
+        branch = request.POST['branch_name']
+        address = request.POST['branch_address']
+        if restaurant_chain.branches.filter(address=address):
+            messages.error(request, 'Branch with same address already exists')
+            return render(request,'select_branch.html', {'branches': branches})
+        
+        Restaurant_Chain_Branch.objects.create(
+            id_restaurant_chain = restaurant_chain,
+            image = image,
+            branch = branch,
+            address = address
+        )
+
+        messages.success(request, 'Branch created sucessfully')
+        return redirect('select_branch') 
+    else:
+        return redirect('select_branch')
 
 
 

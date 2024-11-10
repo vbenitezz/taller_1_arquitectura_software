@@ -29,8 +29,12 @@ def get_product_cart_product_consumer(request, id):
         'name': product.name_product,
         'image': product.image_product(),
         'price': product.publish_price,
-        'publish_quantity': product.publish_quantity
+        'publish_quantity': product.publish_quantity,
+        'place': product.place,
+        'address': product.pick_up_address
+
     }
+    print(data)
     return JsonResponse(data)
 def show_shopping_cart(request):
     return render(request, 'shopping_cart_consumer.html') 
@@ -134,7 +138,9 @@ def buy_order_foundation(request):
                 name=published_product.name_product,
                 price=published_product.publish_price,
                 order=order,
-                quantity=int(product['quantity'])
+                quantity=int(product['quantity']),
+                place= published_product.place,
+                pick_up_address= published_product.pick_up_address
                 )
             if(published_product.publish_quantity==0):
                 published_product.delete()
@@ -163,7 +169,9 @@ def show_order_detail(request):
                 'image':product.image.url,
                 'name': product.name,
                 'price': product.price,
-                'quantity': product.quantity
+                'quantity': product.quantity,
+                'place': product.place,
+                'address': product.pick_up_address
             })
 
 

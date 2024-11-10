@@ -11,6 +11,10 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
+    path('select_branch/', views.select_view, name='select_branch'),
+    path('create_branch/', views.create_branch, name='create_branch'),
+
+
 
 
 ]

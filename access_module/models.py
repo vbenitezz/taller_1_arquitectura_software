@@ -24,6 +24,7 @@ class Custom_User(AbstractUser):
     nit = models.PositiveIntegerField(unique=True) 
     name = models.CharField(max_length=60)
     email = models.EmailField(unique=True)
+    selected_branch = models.ForeignKey('Restaurant_Chain_Branch', null=True, blank=True, on_delete=models.SET_NULL)
 
     USERNAME_FIELD='email'
     REQUIRED_FIELDS = ['name', 'nit']
@@ -48,6 +49,7 @@ class Restaurant_Chain(Custom_User):
 
 class Restaurant_Chain_Branch(models.Model):
     id_restaurant_chain = models.ForeignKey(Restaurant_Chain, on_delete=models.CASCADE, related_name='branches')
+    image = models.ImageField(upload_to="restaurant_chain/branch_images/", null=True)
     branch = models.CharField(max_length=60)
-    address = models.CharField(max_length=200) 
+    address = models.CharField(max_length=200)
 

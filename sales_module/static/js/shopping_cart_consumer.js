@@ -19,15 +19,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     div_product.style.maxWidth = '450px';
                     
                     div_product.innerHTML = `
-                        <div class="row g-0" style="height: 100px;">
+                                                <div class="row g-0" style="height: 100px;">
                             <div class="col-md-4" style="padding: 0; height: 100%;">
                                 <img src="${product.image}" class="img-fluid rounded-start" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                             </div>
-                            <div class="col-md-8" style="height: 100%; position: relative;">
-                                <div class="card-body p-2 d-flex flex-column justify-content-center" style="height: 100%;">
-                                    <h5 class="card-title" style="font-size: 1rem;">${product.name}</h5>
-                                    <p class="card-text" style="font-size: 0.875rem;">US$${product.price}</p>
-                                    <p class="card-text"><small class="text-body-secondary">${product.quantity} unit(s)</small></p>
+                            <div class="col-md-8 d-flex flex-column justify-content-center" style="height: 100%; position: relative; padding: 0 6px;">
+                                <div class="card-body p-2" style="height: 100%;">
+                                    <h5 class="card-title" style="font-size: 1rem; margin-bottom: 0.1rem;">${product.name}</h5>
+                                    <p class="card-text" style="font-size: 0.8rem; margin-bottom: 0.1rem;">US$${product.price}</p>
+                                    <p class="card-text" style="font-size: 0.8rem; margin-bottom: 0.1rem;"><small class="text-body-secondary">${product.address}</small></p>
+                                    <p class="card-text" style="font-size: 0.8rem;"><small class="text-body-secondary">${product.quantity} unit(s)</small></p>
                                 </div>
                                 <!-- Ícono de basura -->
                                 <button class="btn btn-danger position-absolute" style="top: 10px; right: 10px;" id="delete_product_${index}">
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </button>
                             </div>
                         </div>
+
                     `;
                     
                     // Agregar cada tarjeta al cuerpo del modal

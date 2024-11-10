@@ -26,3 +26,5 @@ class Cart_Product(models.Model):
     price = models.IntegerField(default=0);
     order =  models.ForeignKey(Order, on_delete=models.CASCADE,null=True,related_name='products')
     quantity = models.IntegerField(null=True)
+    pick_up_address = models.CharField(max_length=200,null=True)
+    place = models.CharField(max_length=200,null=True)
