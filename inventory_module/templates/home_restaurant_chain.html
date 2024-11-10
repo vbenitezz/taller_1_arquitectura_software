@@ -1,0 +1,91 @@
+{% extends 'template_inventory_module.html' %}
+{% block title %} Home {% endblock %}
+
+{% block extra_styles %}
+<style>
+    .image_div{
+        position: relative;
+    }
+
+    .icon_div{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .image_div:hover .icon_div{
+        opacity: 1;
+    }
+    .icon_trash{
+        font-size: 2rem;
+        color: white;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    }  
+</style>
+{% endblock %}
+
+{% block body %}
+<h2 class="text-center">Published products</h2>
+<div class="container py-4">
+    <div class="container">
+        <div class="container-md" style="background-color: #f5f5f5;">
+            <br>
+            <div class="row">
+                {% if products %}
+                {% for product in products %}
+                {% if product.publish_quantity > 0 %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card border border-info-subtle card-custom">
+                        <!-- img -->
+                        <div class="image_div">
+                            <img src="../../{{product.image_product}}" class="card-img-top img-fluid" alt="{{product.name_product}}">
+                            <div class="icon_div">
+                                <i class="fa fa-trash icon_trash" onclick="confirm_delete('{{ product.id }}')"></i>
+                            </div>
+                        </div>
+                        <!-- img -->
+                          
+                        <div class="card-body card-body-custom">
+                            <h5 class="card-title">{{product.name_product}}</h5>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Price: </strong>{{product.publish_price}}$</li>
+                            <li class="list-group-item" id="new_quantity_{{product.id}}"><strong>Quantity: </strong>{{product.publish_quantity}}</li>
+                            <li class="list-group-item"><strong>Category: </strong>{{product.category_product}} </li>
+                            <li class="list-group-item"><strong>Description: </strong>{{product.description_product}}</li>
+                            <li class="list-group-item"><strong>Pick up time: </strong>{{product.pick_up_time}}</li>
+                            <li class="list-group-item"><strong>Publish type: </strong>{{product.publish_type|capfirst}}</li>
+                        </ul>
+                    </div>
+                </div> 
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <div class="alert alert-info" role="alert">There are no products</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function confirm_delete(id_product) {
+        const confirmation = confirm("Are you sure you want to delete this product?");
+        if (confirmation) {
+            window.location.href = `/delete_published_product/${id_product}/`;
+        }
+    }
+</script>
+{% endblock %}
+
+

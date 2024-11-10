@@ -8,8 +8,16 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+# def home_restaurant_chain(request):
+#     return render(request, 'template_inventory_module.html')
+@login_required
 def home_restaurant_chain(request):
-    return render(request, 'template_inventory_module.html')
+    products = Published_Product.objects.all()
+    return render(request, 'home_restaurant_chain.html', {'products': products})
+def delete_published_product(request, id_product):
+    product = get_object_or_404(Published_Product, id=id_product)
+    product.delete()
+    return redirect('home_restaurant_chain')
 
 @login_required
 def show_product(request):
