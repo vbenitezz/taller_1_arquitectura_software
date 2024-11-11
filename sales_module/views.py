@@ -109,7 +109,9 @@ def buy_order_consumer(request):
                 name=published_product.name_product,
                 price=published_product.publish_price,
                 order=order,
-                quantity=int(product['quantity'])
+                quantity=int(product['quantity']),
+                place= published_product.place,
+                pick_up_address= published_product.pick_up_address
                 )
             if(published_product.publish_quantity==0):
 

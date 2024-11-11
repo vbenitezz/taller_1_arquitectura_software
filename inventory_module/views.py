@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Product_Inventory, Inventory, Published_Product
+from access_module.models import Restaurant_Chain_Branch
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db import IntegrityError
@@ -12,7 +13,9 @@ from django.contrib.auth.decorators import login_required
 #     return render(request, 'template_inventory_module.html')
 @login_required
 def home_restaurant_chain(request):
-    products = Published_Product.objects.all()
+    user_branch_id = request.user.selected_branch.id
+    user_branch_address = Restaurant_Chain_Branch.objects.get(id=user_branch_id).address
+    products = Published_Product.objects.filter(id_product_inventory__id_product__pick_up_address=user_branch_address)
     return render(request, 'home_restaurant_chain.html', {'products': products})
 def delete_published_product(request, id_product):
     product = get_object_or_404(Published_Product, id=id_product)
@@ -23,19 +26,24 @@ def delete_published_product(request, id_product):
 def show_product(request):
     user = request.user
     if hasattr(user, 'restaurant_chain'):
-        products = Product.objects.all()
+        user_branch_id = request.user.selected_branch.id
+        user_branch_address = Restaurant_Chain_Branch.objects.get(id=user_branch_id).address
+        products = Product.objects.filter(pick_up_address=user_branch_address)
         return render(request, 'create_product.html', {'products': products})
     else:
         return redirect('view_products_for_donate')
     
 def create_product(request):
+    user_branch_id = request.user.selected_branch.id
+    user_branch_address = Restaurant_Chain_Branch.objects.get(id=user_branch_id).address
+    user_branch_place = Restaurant_Chain_Branch.objects.get(id=user_branch_id).branch
     name = request.POST['input_name']
     category = request.POST['input_category']
     sale_price = request.POST['input_sale_price']
     description = request.POST['input_description']
     image = request.FILES['input_image']
     categories = ['Fast Food', 'Healthy Options', 'Grilled & BBQ', 'Sides', 'Beverages', 'Desserts']
-    product = Product.objects.create(name=name, category=categories[int(category)-1], sale_price=sale_price, description=description, image=image)
+    product = Product.objects.create(name=name, category=categories[int(category)-1], sale_price=sale_price, description=description, image=image, pick_up_address=user_branch_address,place=user_branch_place)
     return redirect('inventory')
 
 def delete_product(request, id):
@@ -52,7 +60,6 @@ def get_product(request, id):
         'description': product.description,
         'image': product.image.url if product.image else ''
     }
-    print(data)
     return JsonResponse(data)
 def edit_product(request, id):
     categories = {1: 'Fast Food', 2: 'Healthy Options', 3: 'Grilled & BBQ', 4: 'Sides', 5: 'Beverages', 6: 'Desserts'}
@@ -90,7 +97,9 @@ def delete_product_add_product(request, id):
 def add_product_view(request):
     user = request.user
     if hasattr(user, 'restaurant_chain'):
-        products_inventory = Product_Inventory.objects.all()
+        user_branch_id = request.user.selected_branch.id
+        user_branch_address = Restaurant_Chain_Branch.objects.get(id=user_branch_id).address
+        products_inventory = Product_Inventory.objects.filter(id_product__pick_up_address=user_branch_address)
         return render(request,'add_product.html',{'products':products_inventory})
     else:
         return redirect('view_products_for_donate')
@@ -101,7 +110,8 @@ def add_product_function(request):
     products = Product.objects.filter(name=name)
     today = timezone.localtime(timezone.now()).date()
     inventory = Inventory.objects.filter(creation_date=today).first()
-
+    user_branch_id = request.user.selected_branch.id
+    user_branch_address = Restaurant_Chain_Branch.objects.get(id=user_branch_id).address
     if inventory is None:
         inventory = Inventory.objects.create()
     
@@ -112,7 +122,7 @@ def add_product_function(request):
             product_inventory = Product_Inventory.objects.create(
                 id_product=product, 
                 id_inventory=inventory, 
-                total_quantity=total_quantity
+                total_quantity=total_quantity,
             )
             messages.success(request, 'Product added successfully')
         except IntegrityError as e:
@@ -124,9 +134,10 @@ def add_product_function(request):
     return redirect('show_add_product')
 
 def show_add_product(request):
-    products_inventory = Product_Inventory.objects.all()
+    user_branch_id = request.user.selected_branch.id
+    user_branch_address = Restaurant_Chain_Branch.objects.get(id=user_branch_id).address
+    products_inventory = Product_Inventory.objects.filter(id_product__pick_up_address=user_branch_address)
     return render(request,'add_product.html',{'products':products_inventory})
-
 
 
 def search_products_suggestions(request):
@@ -181,8 +192,6 @@ def publish_product(request):
                 publish_quantity=published_quantity,
                 publish_price=publish_product_price,
                 pick_up_time=publish_product_pick_up_time,
-                pick_up_address=publish_product_pick_up_address
-
             )
             messages.success(request, 'Product published successfully')
 

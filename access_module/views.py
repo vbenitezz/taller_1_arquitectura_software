@@ -51,6 +51,7 @@ def sign_up(request):
 
 
 def login_view(request):
+
     if request.method == 'POST':
         login_form = Custom_Login_Form(request, data=request.POST)
         if login_form.is_valid():

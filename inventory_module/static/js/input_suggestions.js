@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const input_name = document.getElementById('input_name');
     const suggestions_list = document.getElementById('suggestions_list');
-
     input_name.addEventListener('input', function() {
             const query = input_name.value;
             if (query.length < 2) {
@@ -10,7 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            fetch(`http://localhost:8000/search_products_suggestions/?q=${encodeURIComponent(query)}`)
+            fetch(`http://localhost:8000/search_products_suggestions/?q=${encodeURIComponent(query)}`,{
+                method: 'GET',
+                credentials: 'include'  
+            })
                 .then(response => response.json())
                 .then(data => {
                     suggestions_list.innerHTML = '';

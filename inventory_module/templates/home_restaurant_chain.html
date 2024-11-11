@@ -80,10 +80,28 @@
 {% block extra_scripts %}
 <script>
     function confirm_delete(id_product) {
-        const confirmation = confirm("Are you sure you want to delete this product?");
-        if (confirmation) {
-            window.location.href = `/delete_published_product/${id_product}/`;
-        }
+        Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to remove this product?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, confirm it!'
+            }).then((result) => {
+                if(result.isConfirmed){
+                    Swal.fire({
+                        icon: 'success',      
+                        title: 'Product deleted successfully',
+                        showConfirmButton: false,
+                        timer: 2000
+                        }).then((result)=>{
+                            setTimeout(function() {
+                                window.location.href = `/delete_published_product/${id_product}/`;
+                            }, 100);
+                        })
+                }
+            });
     }
 </script>
 {% endblock %}

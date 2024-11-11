@@ -11,6 +11,9 @@ class Product(models.Model):
     sale_price = models.PositiveIntegerField()
     description = models.TextField()
     image = models.ImageField(upload_to='inventory/image/')
+    pick_up_address = models.CharField(max_length=200,null=True)
+    place = models.CharField(max_length=200,null=True)
+
     def __str__(self):
         return self.name
 
@@ -29,6 +32,7 @@ class Inventory(models.Model):
 class Product_Inventory(models.Model):
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE)
     id_inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+
     total_quantity = models.IntegerField()
     class Meta:
         unique_together = ('id_product', 'id_inventory')
@@ -47,14 +51,16 @@ class Product_Inventory(models.Model):
     @property
     def image_product(self):
         return self.id_product.image_url
+    @property
+    def pick_up_address(self):
+        return self.id_product.pick_up_address
 class Published_Product(models.Model):
     id_product_inventory = models.ForeignKey(Product_Inventory, on_delete=models.CASCADE)
     publish_type = models.CharField(max_length=20)
     publish_quantity = models.PositiveIntegerField()
     publish_price = models.PositiveIntegerField()
     pick_up_time = models.TimeField()
-    pick_up_address = models.CharField(max_length=200,null=True)
-    place = models.CharField(max_length=200,null=True)
+    
     
     def save(self, *args, **kwargs):
         self.clean()
@@ -73,6 +79,12 @@ class Published_Product(models.Model):
     @property
     def image_product(self):
         return self.id_product_inventory.image_product
+    @property
+    def pick_up_address(self):
+        return self.id_product_inventory.id_product.pick_up_address
+    @property
+    def place(self):
+        return self.id_product_inventory.id_product.place
 
     
 
