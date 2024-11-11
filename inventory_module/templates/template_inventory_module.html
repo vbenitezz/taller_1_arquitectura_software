@@ -16,25 +16,23 @@
 <body>
   <nav class="navbar navbar-expand-lg" style="background-color: #F2F2F2;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
         <img src="../static/img/black_logo.png" alt="Logo" style="height: 40px; margin-right: 10px;">PlateCare
-      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarScroll">
         <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home_restaurant_chain' %}">Published products</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'home_restaurant_chain' %}" data-toggle="tooltip" data-placement="top" title="You will be able to see the products published for sale or donation.">Published products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'inventory' %}">Create product</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'inventory' %}" data-toggle="tooltip" data-placement="top" title="You will be able to create the products you normally produce in your business.">Create product</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'add_product' %}">Add product</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'add_product' %}" data-toggle="tooltip" data-placement="top" title="You will be able to add the products you have produced this day.">Add product</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'analysis:display_graphics' %}">Analysis</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'analysis:display_graphics' %}" data-toggle="tooltip" data-placement="top" title="You will be able to see some analysis on the products, sales or donations made.">Analysis</a>
           </li>
           
         </ul>
@@ -72,4 +70,9 @@
   
   
 </body>
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  })
+  </script>
 </html>

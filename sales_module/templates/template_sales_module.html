@@ -22,9 +22,9 @@
   <nav class="navbar navbar-expand-lg sticky-top" style="background-color: white;">
     <div class="container-fluid">
       
-      <a class="navbar-brand" href="#">
+      
         <img src="../static/img/black_logo.png" alt="Logo" style="height: 40px; margin-right: 10px;">PlateCare
-      </a>
+      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
         aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -40,16 +40,16 @@
           </li>
           <li class="nav-item">
             {% if user.is_authenticated %}
-            <a class="nav-link active " aria-current="page" type="button" data-bs-toggle="modal" data-bs-target="#shopping_cart_foundation_modal">Shopping cart</a>
+            <a class="nav-link active " aria-current="page" type="button" data-bs-toggle="modal" data-bs-target="#shopping_cart_foundation_modal" data-toggle="tooltip" data-placement="top" title="You will be able to see the products you want to buy">Shopping cart</a>
             {% else %}
             <!-- <button data-id_cart_product="{{product.id}}" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shopping_cart_consumer_modal">Shopping cart</button> -->
-            <button class="nav-link active" type="button" data-bs-toggle="modal" data-bs-target="#shopping_cart_consumer_modal">Shopping cart</button>
+            <button class="nav-link active" type="button" data-bs-toggle="modal" data-bs-target="#shopping_cart_consumer_modal" data-toggle="tooltip" data-placement="top" title="You will be able to see the products you want to buy">Shopping cart</button>
             <!-- <a class="nav-link active " aria-current="page" href="{% url 'show_shopping_cart' %}">Shopping cart</a> -->
             {% endif %}
             
           </li>
           <li class="nav-item"></li>
-            <a class="nav-link active " aria-current="page" href="{% url 'show_orders' %}">Orders</a>
+            <a class="nav-link active " aria-current="page" href="{% url 'show_orders' %}" data-toggle="tooltip" data-placement="top" title="You will be able to view the orders you have placed with the products you have purchased.">Orders</a>
           </li>
         </ul>
         {% if user.is_authenticated %}
@@ -80,7 +80,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body d-flex justify-content-center gap-4">
-          <a href="/access/sign_up/?user_type=restaurant%20chain" class="btn btn-primary" style="width: 40%;">
+          <a href="/access/sign_up/?user_type=restaurant%20chain" class="btn btn-primary" style="width: 40%;" >
             Restaurant chain
           </a>
           <a href="/access/sign_up/?user_type=foundation" class="btn btn-primary" style="width: 40%;">
@@ -96,5 +96,9 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
 </body>
-
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  })
+  </script>
 </html>
