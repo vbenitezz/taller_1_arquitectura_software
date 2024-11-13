@@ -86,6 +86,36 @@ class Published_Product(models.Model):
     def place(self):
         return self.id_product_inventory.id_product.place
 
+class Wasted_Product(models.Model):
+    id_product_inventory = models.ForeignKey(Product_Inventory, on_delete=models.CASCADE)
+    wasted_quantity = models.PositiveIntegerField()  
+    wasted_date = models.DateField(auto_now_add=True)  
+
+    def __str__(self):
+        return f"{self.id_product_inventory.name_product} - {self.wasted_quantity} desperdiciados"
     
+    @property
+    def name_product(self):
+        return self.id_product_inventory.name_product
+    
+    @property
+    def category_product(self):
+        return self.id_product_inventory.category_product
+    
+    @property
+    def description_product(self):
+        return self.id_product_inventory.description_product
+
+    @property
+    def image_product(self):
+        return self.id_product_inventory.image_product
+
+    @property
+    def pick_up_address(self):
+        return self.id_product_inventory.pick_up_address
+
+    @property
+    def place(self):
+        return self.id_product_inventory.place
 
 

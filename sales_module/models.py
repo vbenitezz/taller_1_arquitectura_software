@@ -24,6 +24,7 @@ class Cart_Product(models.Model):
     image = models.ImageField(upload_to='inventory/image/',default='default_image.jpg')
     name = models.CharField(max_length=250,default='')
     price = models.IntegerField(default=0)
+    category = models.CharField(max_length=60, default="None")
     order =  models.ForeignKey(Order, on_delete=models.CASCADE,null=True,related_name='products')
     quantity = models.IntegerField(null=True)
     pick_up_address = models.CharField(max_length=200,null=True)

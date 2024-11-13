@@ -1,24 +1,49 @@
 from django.shortcuts import render, redirect
 from .models import Published_Product, Order, Cart_Product
+from inventory_module.models import Wasted_Product
 from access_module.models import Foundation
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 import json
 from django.views.decorators.csrf import csrf_exempt
-
-
-
-# Create your views here.
+from datetime import datetime
 
 def view_products_for_sale(request):
     products = Published_Product.objects.filter(publish_type="sale")
-    return render(request, 'show_published_product_consumer.html',{'products':products})
+    current_time = datetime.now().strftime("%H:%M:%S")
+
+    for product in products:
+        time_obj = product.pick_up_time.strftime("%H:%M:%S")
+
+        if current_time > time_obj:
+            wasted_product = Wasted_Product.objects.create(
+                id_product_inventory=product.id_product_inventory,
+                wasted_quantity=product.publish_quantity,  
+            )
+
+            product.delete()
+
+    return render(request, 'show_published_product_consumer.html', {'products': products})
+
 
 @login_required
 def view_products_for_donate(request):
     user = request.user
     if hasattr(user, 'foundation'):
-        products = Published_Product.objects.filter(publish_type='donation')
+        products = Published_Product.objects.filter(publish_type="donation")
+        current_time = datetime.now().strftime("%H:%M:%S")
+
+        for product in products:
+            time_obj = product.pick_up_time.strftime("%H:%M:%S")
+
+            if current_time > time_obj:
+                wasted_product = Wasted_Product.objects.create(
+                    id_product_inventory=product.id_product_inventory,
+                    wasted_quantity=product.publish_quantity,  
+                )
+
+                product.delete()
+        
         return render(request, 'show_published_product_foundation.html', {'products':products})
     else:
         return redirect('inventory')
@@ -93,10 +118,10 @@ def update_product_delete_quantity(request):
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
 @csrf_exempt
 def buy_order_consumer(request):
+    '''Creacion de la orden final'''
     if request.method == 'POST':
         data =  json.loads(request.body)
         products=json.loads(data['products'])
-        print(products)
         order = Order.objects.create(
             payment_method = "cash",
             total_price =  data['total_price']
@@ -111,7 +136,8 @@ def buy_order_consumer(request):
                 order=order,
                 quantity=int(product['quantity']),
                 place= published_product.place,
-                pick_up_address= published_product.pick_up_address
+                pick_up_address= published_product.pick_up_address,
+                category = published_product.category_product
                 )
             if(published_product.publish_quantity==0):
 

@@ -1,6 +1,7 @@
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
+from inventory_module.models import Wasted_Product
 import plotly.graph_objs as go
 from django_plotly_dash import DjangoDash
 from sales_module.models import Published_Product
@@ -15,10 +16,10 @@ app.layout = html.Div([
     dcc.Slider(
         id='slider-pie',
         min=1,  # El mínimo debe ser 1 para mostrar al menos un valor
-        max=2,  # Ya que solo hay 2 categorías: "sold" y "donated"
+        max=3,  # Ya que solo hay 2 categorías: "sold" y "donated"
         step=1,
-        value=2,  # Valor inicial, muestra ambas categorías
-        marks={1: '1', 2: '2'},  # Etiquetas del slider
+        value=3,  # Valor inicial, muestra ambas categorías
+        marks={1: '1', 2: '2', 3: '3'},  # Etiquetas del slider
         updatemode='drag',
     ),
 ])
@@ -39,10 +40,17 @@ def update_pie_chart(value):
                 sold += product.quantity
             else:  # Ordenes con cliente son ventas
                 donate += product.quantity
-                
+    
+    products_wasted = 0
+    for product_wasted in Wasted_Product.objects.all():
+        products_wasted += product_wasted.wasted_quantity
+
+    print("Pamparesco")
+    print(products_wasted)
+
     # Definir etiquetas y valores
-    labels = ['Products sold', 'Products donated']
-    values = [sold, donate]
+    labels = ['Products sold', 'Products donated', 'Products Wasted']
+    values = [sold, donate, products_wasted]
 
     # Limitar los datos según el valor del slider (muestra 'value' número de categorías)
     labels = labels[:value]
@@ -53,7 +61,7 @@ def update_pie_chart(value):
         labels=labels,
         values=values,
         hole=0.1,  # Para agregar un pequeño agujero en el centro, como un gráfico de dona
-        marker=dict(colors=['#3C93AF', '#F9AA41']),  # Colores del gráfico
+        marker=dict(colors=['#3C93AF', '#F9AA41', '#0E272C']),  # Colores del gráfico
     )
 
     layout = go.Layout(
