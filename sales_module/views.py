@@ -30,7 +30,19 @@ def view_products_for_sale(request):
 def view_products_for_donate(request):
     user = request.user
     if hasattr(user, 'foundation'):
-        products = Published_Product.objects.filter(publish_type='donation')
+        products = Published_Product.objects.filter(publish_type="donation")
+        current_time = datetime.now().strftime("%H:%M:%S")
+
+        for product in products:
+            time_obj = product.pick_up_time.strftime("%H:%M:%S")
+
+            if current_time > time_obj:
+                wasted_product = Wasted_Product.objects.create(
+                    id_product_inventory=product.id_product_inventory,
+                    wasted_quantity=product.publish_quantity,  
+                )
+
+                product.delete()
         
         return render(request, 'show_published_product_foundation.html', {'products':products})
     else:
