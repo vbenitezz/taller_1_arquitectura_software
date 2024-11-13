@@ -1,24 +1,37 @@
 from django.shortcuts import render, redirect
 from .models import Published_Product, Order, Cart_Product
+from inventory_module.models import Wasted_Product
 from access_module.models import Foundation
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 import json
 from django.views.decorators.csrf import csrf_exempt
-
-
-
-# Create your views here.
+from datetime import datetime
 
 def view_products_for_sale(request):
     products = Published_Product.objects.filter(publish_type="sale")
-    return render(request, 'show_published_product_consumer.html',{'products':products})
+    current_time = datetime.now().strftime("%H:%M:%S")
+
+    for product in products:
+        time_obj = product.pick_up_time.strftime("%H:%M:%S")
+
+        if current_time > time_obj:
+            wasted_product = Wasted_Product.objects.create(
+                id_product_inventory=product.id_product_inventory,
+                wasted_quantity=product.publish_quantity,  
+            )
+
+            product.delete()
+
+    return render(request, 'show_published_product_consumer.html', {'products': products})
+
 
 @login_required
 def view_products_for_donate(request):
     user = request.user
     if hasattr(user, 'foundation'):
         products = Published_Product.objects.filter(publish_type='donation')
+        
         return render(request, 'show_published_product_foundation.html', {'products':products})
     else:
         return redirect('inventory')

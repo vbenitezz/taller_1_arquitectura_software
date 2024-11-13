@@ -231,6 +231,41 @@
                                     </div>
                                 </div>
 
+
+                                <div class="form-check">
+                                    <input class="form-check-input variable-checkbox" type="checkbox" value="7" id="var7" name="variables" data-variable="products_donated">
+                                    <label class="form-check-label" for="var7">
+                                        Products wasted
+                                    </label>
+                                    <div class="categories-section ms-4 d-none" id="categories7">
+                                        <small class="text-muted d-block mb-2">Optional: Select specific categories or leave empty for all</small>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories7" value="Fast Food">
+                                            <label class="form-check-label">Fast Food</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories7" value="Healthy Options">
+                                            <label class="form-check-label">Healthy Options</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories7" value="Grilled & BBQ">
+                                            <label class="form-check-label">Grilled & BBQ</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories7" value="Sides">
+                                            <label class="form-check-label">Sides</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories7" value="Beverages">
+                                            <label class="form-check-label">Beverages</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories7" value="Desserts">
+                                            <label class="form-check-label">Desserts</label>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 
                             </div>
                         </div>
@@ -255,22 +290,19 @@
                 <thead>
                     <tr>
                         <th scope="col">Variable</th>
-                        <th scope="col">Category</th>
                         <th scope="col">Count</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in summary_data %}
                     <tr>
-                        <td>{{ item.variable }}</td>
-                        <td>{{ item.category|default:'All Categories' }}</td>
-                        <td>{{ item.value }}</td>
+                        <td>{{ item.0 }}</td>
+                        <td>{{ item.1 }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-    </div>
     
     <div class="card mt-4">
         <div class="card-header">
