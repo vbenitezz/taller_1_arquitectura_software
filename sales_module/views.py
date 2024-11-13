@@ -93,10 +93,10 @@ def update_product_delete_quantity(request):
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
 @csrf_exempt
 def buy_order_consumer(request):
+    '''Creacion de la orden final'''
     if request.method == 'POST':
         data =  json.loads(request.body)
         products=json.loads(data['products'])
-        print(products)
         order = Order.objects.create(
             payment_method = "cash",
             total_price =  data['total_price']
@@ -111,7 +111,8 @@ def buy_order_consumer(request):
                 order=order,
                 quantity=int(product['quantity']),
                 place= published_product.place,
-                pick_up_address= published_product.pick_up_address
+                pick_up_address= published_product.pick_up_address,
+                category = published_product.category_product
                 )
             if(published_product.publish_quantity==0):
 

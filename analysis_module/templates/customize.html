@@ -21,44 +21,217 @@
                             </select>
                             <div class="invalid-feedback">Example invalid select feedback</div>
                         </div>
+                        
                         <div class="mb-3">
-                            <label for="input_variables" class="form-label">Variables</label>
-                            <!-- Checkboxes for the variables -->
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="1">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Products sold
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="2" id="flexCheckChecked1" name="2">
-                                <label class="form-check-label" for="flexCheckChecked1">
-                                    Products donated
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="3" id="flexCheckChecked3" name="3">
-                                <label class="form-check-label" for="flexCheckChecked3">
-                                    Products in inventory
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="4" id="flexCheckChecked4" name="4">
-                                <label class="form-check-label" for="flexCheckChecked4">
-                                    Products published
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="5" id="flexCheckChecked4" name="5">
-                                <label class="form-check-label" for="flexCheckChecked4">
-                                    Products published for sale
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="6" id="flexCheckChecked4" name="6">
-                                <label class="form-check-label" for="flexCheckChecked4">
-                                    Products published for donate
-                                </label>
+                            <label class="form-label">Variables</label>
+                            <!-- Variables section -->
+                            <div class="variables-section">
+                                <div class="form-check">
+                                    <input class="form-check-input variable-checkbox" type="checkbox" value="1" id="var1" name="variables" data-variable="products_sold">
+                                    <label class="form-check-label" for="var1">
+                                        Products sold
+                                    </label>
+                                    <!-- Categories for Products sold -->
+                                    <div class="categories-section ms-4 d-none" id="categories1">
+                                        <small class="text-muted d-block mb-2">Optional: Select specific categories or leave empty for all</small>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories1" value="Fast Food">
+                                            <label class="form-check-label">Fast Food</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories1" value="Healthy Options">
+                                            <label class="form-check-label">Healthy Options</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories1" value="Grilled & BBQ">
+                                            <label class="form-check-label">Grilled & BBQ</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories1" value="Sides">
+                                            <label class="form-check-label">Sides</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories1" value="Beverages">
+                                            <label class="form-check-label">Beverages</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories1" value="Desserts">
+                                            <label class="form-check-label">Desserts</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input variable-checkbox" type="checkbox" value="2" id="var2" name="variables" data-variable="products_donated">
+                                    <label class="form-check-label" for="var2">
+                                        Products donated
+                                    </label>
+                                    <div class="categories-section ms-4 d-none" id="categories2">
+                                        <small class="text-muted d-block mb-2">Optional: Select specific categories or leave empty for all</small>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories2" value="Fast Food">
+                                            <label class="form-check-label">Fast Food</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories2" value="Healthy Options">
+                                            <label class="form-check-label">Healthy Options</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories2" value="Grilled & BBQ">
+                                            <label class="form-check-label">Grilled & BBQ</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories2" value="Sides">
+                                            <label class="form-check-label">Sides</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories2" value="Beverages">
+                                            <label class="form-check-label">Beverages</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories2" value="Desserts">
+                                            <label class="form-check-label">Desserts</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input variable-checkbox" type="checkbox" value="3" id="var3" name="variables" data-variable="products_donated">
+                                    <label class="form-check-label" for="var3">
+                                        Products in inventory
+                                    </label>
+                                    <div class="categories-section ms-4 d-none" id="categories3">
+                                        <small class="text-muted d-block mb-2">Optional: Select specific categories or leave empty for all</small>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories3" value="Fast Food">
+                                            <label class="form-check-label">Fast Food</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories3" value="Healthy Options">
+                                            <label class="form-check-label">Healthy Options</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories3" value="Grilled & BBQ">
+                                            <label class="form-check-label">Grilled & BBQ</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories3" value="Sides">
+                                            <label class="form-check-label">Sides</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories3" value="Beverages">
+                                            <label class="form-check-label">Beverages</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories3" value="Desserts">
+                                            <label class="form-check-label">Desserts</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input variable-checkbox" type="checkbox" value="4" id="var4" name="variables" data-variable="products_donated">
+                                    <label class="form-check-label" for="var4">
+                                        Products published
+                                    </label>
+                                    <div class="categories-section ms-4 d-none" id="categories4">
+                                        <small class="text-muted d-block mb-2">Optional: Select specific categories or leave empty for all</small>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories4" value="Fast Food">
+                                            <label class="form-check-label">Fast Food</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories4" value="Healthy Options">
+                                            <label class="form-check-label">Healthy Options</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories4" value="Grilled & BBQ">
+                                            <label class="form-check-label">Grilled & BBQ</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories4" value="Sides">
+                                            <label class="form-check-label">Sides</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories4" value="Beverages">
+                                            <label class="form-check-label">Beverages</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories4" value="Desserts">
+                                            <label class="form-check-label">Desserts</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input variable-checkbox" type="checkbox" value="5" id="var5" name="variables" data-variable="products_donated">
+                                    <label class="form-check-label" for="var5">
+                                        Products published for sale
+                                    </label>
+                                    <div class="categories-section ms-4 d-none" id="categories5">
+                                        <small class="text-muted d-block mb-2">Optional: Select specific categories or leave empty for all</small>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories5" value="Fast Food">
+                                            <label class="form-check-label">Fast Food</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories5" value="Healthy Options">
+                                            <label class="form-check-label">Healthy Options</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories5" value="Grilled & BBQ">
+                                            <label class="form-check-label">Grilled & BBQ</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories5" value="Sides">
+                                            <label class="form-check-label">Sides</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories5" value="Beverages">
+                                            <label class="form-check-label">Beverages</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories5" value="Desserts">
+                                            <label class="form-check-label">Desserts</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input variable-checkbox" type="checkbox" value="6" id="var6" name="variables" data-variable="products_donated">
+                                    <label class="form-check-label" for="var6">
+                                        Products published for donate
+                                    </label>
+                                    <div class="categories-section ms-4 d-none" id="categories6">
+                                        <small class="text-muted d-block mb-2">Optional: Select specific categories or leave empty for all</small>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories6" value="Fast Food">
+                                            <label class="form-check-label">Fast Food</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories6" value="Healthy Options">
+                                            <label class="form-check-label">Healthy Options</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories6" value="Grilled & BBQ">
+                                            <label class="form-check-label">Grilled & BBQ</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories6" value="Sides">
+                                            <label class="form-check-label">Sides</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories6" value="Beverages">
+                                            <label class="form-check-label">Beverages</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="categories6" value="Desserts">
+                                            <label class="form-check-label">Desserts</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
                             </div>
                         </div>
 
@@ -72,7 +245,7 @@
     </div>
 
     {% if is_chart == 1 %}
-    <!-- Tabla con los datos resumidos -->
+    <!-- Summary Table -->
     <div class="card mt-4">
         <div class="card-header">
             Summary Table
@@ -82,14 +255,16 @@
                 <thead>
                     <tr>
                         <th scope="col">Variable</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Count</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for label, value in summary_data %}
+                    {% for item in summary_data %}
                     <tr>
-                        <td>{{ label }}</td>
-                        <td>{{ value }}</td>
+                        <td>{{ item.variable }}</td>
+                        <td>{{ item.category|default:'All Categories' }}</td>
+                        <td>{{ item.value }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -107,25 +282,39 @@
             </div>
         </div>
     </div>
-    
-    
     {% endif %}
 </main>
 
 <script>
-    document.getElementById('chartForm').addEventListener('submit', function(event) {
-        const chartType = document.getElementById('input_category').value;
-        const checkboxes = document.querySelectorAll('.form-check-input');
-        let checkedCount = 0;
-        checkboxes.forEach(function(checkbox) {
-            if (checkbox.checked) {
-                checkedCount++;
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle showing/hiding category sections
+    const variableCheckboxes = document.querySelectorAll('.variable-checkbox');
+    
+    variableCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const categoriesSection = document.getElementById('categories' + this.value);
+            if (this.checked) {
+                categoriesSection.classList.remove('d-none');
+            } else {
+                categoriesSection.classList.add('d-none');
+                // Uncheck all category checkboxes when variable is unchecked
+                const categoryCheckboxes = categoriesSection.querySelectorAll('input[type="checkbox"]');
+                categoryCheckboxes.forEach(cb => cb.checked = false);
             }
         });
-        if (chartType === "0" || checkedCount < 2) {
-            event.preventDefault(); 
-            alert('Please select a chart type and at least two variables.');
+    });
+
+    // Form validation
+    document.getElementById('chartForm').addEventListener('submit', function(event) {
+        const chartType = document.getElementById('input_category').value;
+        const variableCheckboxes = document.querySelectorAll('.variable-checkbox:checked');
+        
+        if (chartType === "0" || variableCheckboxes.length < 1) {
+            event.preventDefault();
+            alert('Please select a chart type and at least one variable.');
+            return;
         }
     });
+});
 </script>
 {% endblock %}
