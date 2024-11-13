@@ -3,90 +3,22 @@ from django.contrib.auth.decorators import login_required
 from sales_module.models import Published_Product, Order
 from inventory_module.models import Product_Inventory
 import plotly.graph_objs as go
-from collections import defaultdict
 
-CATEGORIES = ['Fast Food', 'Healthy Options', 'Grilled & BBQ', 'Sides', 'Beverages', 'Desserts']
+print('//////////////////////////////////')
+orders = Order.objects.filter(customer__isnull=True)
+for order in orders:
+    for product in order.products.all():
+        print(f'{product.id} -> {product.name} : {product.quantity}')
 
-def get_products_sold_data(selected_categories=None):
-    data = defaultdict(int)
-    orders = Order.objects.exclude(customer_id=None)
-    
-    for order in orders:
-        for product in order.products.all():
-            category = product.category
-            # Si no hay categorías seleccionadas o la categoría del producto está en las seleccionadas
-            if not selected_categories or category in selected_categories:
-                data[category] += product.quantity
-    
-    if not selected_categories:
-        return [('Products Sold', sum(data.values()))]
-    return [('Products Sold - ' + category, count) for category, count in data.items()]
-
-def get_products_donated_data(selected_categories=None):
-    data = defaultdict(int)
-    orders = Order.objects.filter(customer_id=None)
-    
-    for order in orders:
-        for product in order.products.all():
-            category = product.category
-            if not selected_categories or category in selected_categories:
-                data[category] += product.quantity
-    
-    if not selected_categories:
-        return [('Products Donated', sum(data.values()))]
-    return [('Products Donated - ' + category, count) for category, count in data.items()]
-
-def get_inventory_data(selected_categories=None):
-    data = defaultdict(int)
-    products = Product_Inventory.objects.all()
-    
-    for product in products:
-        category = product.category
-        if not selected_categories or category in selected_categories:
-            data[category] += product.total_quantity
-    
-    if not selected_categories:
-        return [('Products in Inventory', sum(data.values()))]
-    return [('Inventory - ' + category, count) for category, count in data.items()]
-
-def get_published_data(selected_categories=None):
-    data = defaultdict(int)
-    products = Published_Product.objects.all()
-    
-    for product in products:
-        category = product.category
-        if not selected_categories or category in selected_categories:
-            data[category] += product.publish_quantity
-    
-    if not selected_categories:
-        return [('Products Published', sum(data.values()))]
-    return [('Published - ' + category, count) for category, count in data.items()]
-
-def get_published_sale_data(selected_categories=None):
-    data = defaultdict(int)
-    products = Published_Product.objects.filter(publish_type='sale')
-    
-    for product in products:
-        category = product.category
-        if not selected_categories or category in selected_categories:
-            data[category] += product.publish_quantity
-    
-    if not selected_categories:
-        return [('Products Published for Sale', sum(data.values()))]
-    return [('Published Sale - ' + category, count) for category, count in data.items()]
-
-def get_published_donation_data(selected_categories=None):
-    data = defaultdict(int)
-    products = Published_Product.objects.filter(publish_type='donation')
-    
-    for product in products:
-        category = product.category
-        if not selected_categories or category in selected_categories:
-            data[category] += product.publish_quantity
-    
-    if not selected_categories:
-        return [('Products Published for Donation', sum(data.values()))]
-    return [('Published Donation - ' + category, count) for category, count in data.items()]
+# Variables predefinidas para las opciones seleccionadas
+variables = {
+    'products_sold': 0,
+    'products_donated': 0,
+    'products_in_inventory': 0,
+    'products_published': 0,
+    'products_published_for_sale': 0,
+    'products_published_for_donate': 0
+}
 
 @login_required
 def display_graphics(request):
@@ -104,91 +36,77 @@ def display_graphics(request):
 @login_required
 def customize_chart(request):
     user = request.user
-    if not hasattr(user, 'restaurant_chain'):
+    if hasattr(user, 'restaurant_chain'):
+        if request.method == 'POST':
+            chart_type = request.POST.get('chart_type')
+            
+            selected_variables = request.POST.getlist('variables')
+            categories_variables = {}
+            for selected_variable in selected_variables:
+                categories_variables[selected_variable] = request.POST.getlist(f'categories{selected_variable}')
+
+            print("-"*100)
+            print(categories_variables['1'])
+
+
+            data = []
+            if '1' in categories_variables.keys():
+                if len(categories_variables['1']) == 0:
+                    acc_ = 0
+                    orders = Order.objects.exclude(customer_id=None)
+                    for order in orders:
+                        for product in order.products.all():
+                            acc_ += product.quantity
+                            print(f'{product.id} -> {product.name} : {product.quantity}')
+                    data.append(('Products Donated', acc_))
+                else:
+                    counter = 0
+                    for category in categories_variables['1']:
+                        for order in Order.objects.filter(customer_id = None):
+                            for product in order.products.all():
+                                if product.category == category:
+                                    counter = counter + product.quantity
+                        data.append((f'Products sold: {category}', counter))
+                        counter = 0
+
+            if '3' in categories_variables.keys():
+                data.append(('Products in Inventory', sum([product.total_quantity for product in Product_Inventory.objects.all()])))
+            if '4' in categories_variables.keys():
+                data.append(('Products Published', sum([product.publish_quantity for product in Published_Product.objects.all()])))
+            if '5' in categories_variables.keys():
+                data.append(('Products Published for Sale', sum([product.publish_quantity for product in Published_Product.objects.filter(publish_type='sale')])))
+            if '6' in categories_variables.keys():
+                data.append(('Products Published for Donation', sum([product.publish_quantity for product in Published_Product.objects.filter(publish_type='donation')])))
+
+            # Colores definidos
+            colors = ['#3C93AF', '#F9AA41', '#4EBC95', '#325F74', '#0E272C', '#FFFFFF']
+
+            if chart_type == '1':  # Pie chart
+                labels = [item[0] for item in data]
+                values = [item[1] for item in data]
+                chart = go.Figure(
+                    data=[go.Pie(labels=labels, values=values, 
+                                  marker=dict(colors=colors[:len(labels)]))],  # Colores según la cantidad de etiquetas
+                    layout=go.Layout(title='Pie Chart: Selected Variables')
+                )
+            elif chart_type == '2':  # Bar chart
+                labels = [item[0] for item in data]
+                values = [item[1] for item in data]
+                chart = go.Figure(
+                    data=[go.Bar(x=labels, y=values, 
+                                  marker=dict(color=colors[:len(labels)]))],  # Colores según la cantidad de etiquetas
+                    layout=go.Layout(title='Bar Chart: Selected Variables', xaxis={'title': 'Categories'}, yaxis={'title': 'Count'})
+                )
+
+            chart_html = chart.to_html(full_html=False)
+
+            # Retorna tanto el gráfico como los datos en formato tabla
+            return render(request, 'customize.html', {
+                'is_chart': 1,
+                'chart': chart_html,
+                'summary_data': data  # Pasamos los datos para la tabla
+            })
+
+        return render(request, 'customize.html', {'is_chart': 0})
+    else:
         return redirect('analysis:view_products_for_donate')
-
-    if request.method != 'POST':
-        return render(request, 'customize.html', {'is_chart': 0})
-
-    # Procesar la solicitud POST
-    chart_type = request.POST.get('chart_type')
-    data = []
-
-    # Mapeo de variables a funciones
-    variable_functions = {
-        '1': get_products_sold_data,
-        '2': get_products_donated_data,
-        '3': get_inventory_data,
-        '4': get_published_data,
-        '5': get_published_sale_data,
-        '6': get_published_donation_data
-    }
-
-    # Procesar cada variable seleccionada
-    for var_id in variable_functions.keys():
-        if var_id in request.POST.getlist('variables'):
-            # Obtener categorías seleccionadas para esta variable
-            selected_categories = request.POST.getlist(f'categories{var_id}')
-            # Obtener datos usando la función correspondiente
-            variable_data = variable_functions[var_id](selected_categories if selected_categories else None)
-            data.extend(variable_data)
-
-    if not data:
-        return render(request, 'customize.html', {'is_chart': 0})
-
-    # Colores predefinidos
-    colors = ['#3C93AF', '#F9AA41', '#4EBC95', '#325F74', '#0E272C', '#FFFFFF']
-    
-    # Crear el gráfico apropiado
-    labels = [item[0] for item in data]
-    values = [item[1] for item in data]
-    
-    if chart_type == '1':  # Pie chart
-        chart = go.Figure(
-            data=[go.Pie(
-                labels=labels,
-                values=values,
-                marker=dict(colors=colors[:len(labels)])
-            )],
-            layout=go.Layout(
-                title='Distribution by Variable and Category',
-                height=600
-            )
-        )
-    else:  # Bar chart
-        chart = go.Figure(
-            data=[go.Bar(
-                x=labels,
-                y=values,
-                marker=dict(color=colors[:len(labels)])
-            )],
-            layout=go.Layout(
-                title='Distribution by Variable and Category',
-                xaxis={'title': 'Variables', 'tickangle': 45},
-                yaxis={'title': 'Count'},
-                height=600
-            )
-        )
-
-    # Convertir el gráfico a HTML
-    chart_html = chart.to_html(full_html=False)
-
-    # Preparar los datos para la tabla de resumen
-    summary_data = []
-    for label, value in data:
-        # Separar el nombre de la variable y la categoría si existe
-        if ' - ' in label:
-            variable, category = label.split(' - ', 1)
-        else:
-            variable, category = label, 'All Categories'
-        summary_data.append({
-            'variable': variable,
-            'category': category,
-            'value': value
-        })
-
-    return render(request, 'customize.html', {
-        'is_chart': 1,
-        'chart': chart_html,
-        'summary_data': summary_data
-    })
