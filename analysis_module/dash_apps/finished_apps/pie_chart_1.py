@@ -47,6 +47,8 @@ def update_pie_chart(value):
 
     print("Pamparesco")
     print(products_wasted)
+    print(sold)
+    print(donate)
 
     # Definir etiquetas y valores
     labels = ['Products sold', 'Products donated', 'Products Wasted']

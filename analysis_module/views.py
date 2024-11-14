@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from sales_module.models import Published_Product, Order
-from inventory_module.models import Product_Inventory
-from inventory_module.models import Wasted_Product
+from inventory_module.models import Product_Inventory, Wasted_Product
 import plotly.graph_objs as go
 
 @login_required

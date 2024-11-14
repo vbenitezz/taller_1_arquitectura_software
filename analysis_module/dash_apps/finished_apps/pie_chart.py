@@ -29,7 +29,10 @@ app.layout = html.Div([
 def update_pie_chart(value):
     products_for_donation = sum([product.publish_quantity for product in Published_Product.objects.filter(publish_type='donation')])
     products_for_sale = sum([product.publish_quantity for product in Published_Product.objects.filter(publish_type='sale')])
-    
+
+    print('0'*100)
+    print(products_for_donation)
+    print(products_for_sale)
     labels = ['Sale', 'Donation']
     values = [products_for_sale, products_for_donation]
 
