@@ -47,7 +47,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000'
 ]
 
-
+ALLOWED_HOSTS=['35.222.205.184']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
