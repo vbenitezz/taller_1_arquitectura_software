@@ -58,7 +58,7 @@ def customize_chart(request):
                 data.append(('Products donated', acc_))
                 if len(categories_variables['2']) != 0:
                     counter = 0
-                    for category in categories_variables['1']:
+                    for category in categories_variables['2']:
                         for order in Order.objects.exclude(customer_id = None):
                             for product in order.products.all():
                                 if product.category == category:
