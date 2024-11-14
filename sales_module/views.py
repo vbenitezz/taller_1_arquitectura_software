@@ -22,7 +22,7 @@ def view_products_for_sale(request):
             )
 
             product.delete()
-
+            
     return render(request, 'show_published_product_consumer.html', {'products': products})
 
 
