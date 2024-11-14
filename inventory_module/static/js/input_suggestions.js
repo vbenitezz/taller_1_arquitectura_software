@@ -9,10 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            fetch(`http://localhost:8000/search_products_suggestions/?q=${encodeURIComponent(query)}`,{
-                method: 'GET',
-                credentials: 'include'  
-            })
+            fetch(`http://localhost:8000/search_products_suggestions/?q=${encodeURIComponent(query)}`)
                 .then(response => response.json())
                 .then(data => {
                     suggestions_list.innerHTML = '';

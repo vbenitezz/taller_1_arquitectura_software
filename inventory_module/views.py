@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.db import IntegrityError
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -139,7 +140,7 @@ def show_add_product(request):
     products_inventory = Product_Inventory.objects.filter(id_product__pick_up_address=user_branch_address)
     return render(request,'add_product.html',{'products':products_inventory})
 
-
+@csrf_exempt
 def search_products_suggestions(request):
     query = request.GET.get('q','')
     products = Product.objects.filter(name__icontains=query).values('name')
@@ -176,8 +177,6 @@ def publish_product(request):
                     publish_quantity=published_quantity,
                     publish_price=publish_product_price,
                     pick_up_time=publish_product_pick_up_time,
-                    pick_up_address=publish_product_pick_up_address,
-                    place=publish_product_pick_up_place
                 )
                 messages.success(request, 'Product published successfully')
         else:
