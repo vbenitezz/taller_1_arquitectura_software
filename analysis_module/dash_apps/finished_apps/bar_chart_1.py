@@ -1,5 +1,4 @@
-from dash import dcc
-from dash import html
+from analysis_module.adapters.dash_adapter import dcc, html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 from django_plotly_dash import DjangoDash

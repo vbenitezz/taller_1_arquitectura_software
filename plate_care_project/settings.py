@@ -50,7 +50,9 @@ CORS_ALLOWED_ORIGINS = [
     
 ]
 
-ALLOWED_HOSTS=['34.172.243.100']
+# ALLOWED_HOSTS=['34.172.243.100']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -115,12 +117,12 @@ STATICFILES_FINDERS = [
     'django_plotly_dash.finders.DashComponentFinder'
 ]
 
-PLOTLY_COMPONENTS = [
-    'dash_core_components',
-    'dash_html_components',
-    'dash_renderer',
-    'dpd_components'
-]
+# PLOTLY_COMPONENTS = [
+#     'dash_core_components',
+#     'dash_html_components',
+#     'dash_renderer',
+#     'dpd_components'
+# ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
