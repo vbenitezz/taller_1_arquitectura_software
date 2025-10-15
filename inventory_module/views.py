@@ -12,13 +12,7 @@ from django.db import IntegrityError
 from .models import Product, Product_Inventory, Inventory, Published_Product
 from access_module.models import Restaurant_Chain_Branch
 
-
-# --------------------------------------------------------------
-#  CRUD genérico para los productos del inventario
-# --------------------------------------------------------------
-
 class ProductListView(LoginRequiredMixin, ListView):
-    """Lista todos los productos del restaurante logueado."""
     model = Product
     template_name = 'create_product.html'
     context_object_name = 'products'
@@ -29,7 +23,6 @@ class ProductListView(LoginRequiredMixin, ListView):
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
-    """Crea un nuevo producto en el inventario."""
     model = Product
     template_name = 'product_form.html'
     fields = ['name', 'category', 'sale_price', 'description', 'image']
@@ -46,7 +39,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
-    """Edita un producto existente."""
     model = Product
     template_name = 'product_form.html'
     fields = ['name', 'category', 'sale_price', 'description', 'image']
@@ -56,15 +48,10 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
-    """Elimina un producto del inventario."""
     model = Product
     template_name = 'confirm_delete.html'
     success_url = reverse_lazy('inventory')
 
-
-# --------------------------------------------------------------
-#  Otras vistas complementarias del módulo (no CRUD directo)
-# --------------------------------------------------------------
 
 class HomeRestaurantChainView(LoginRequiredMixin, View):
     def get(self, request):
@@ -156,4 +143,9 @@ class PublishProductView(View):
             messages.success(request, 'Product published successfully')
 
         return redirect('add_product')
+
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['products'] = context['object_list']
+    return context
 
